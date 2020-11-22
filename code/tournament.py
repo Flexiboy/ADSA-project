@@ -80,13 +80,15 @@ def main():
 			game_list = newRound(alive)
 			tournament.append(game_list)
 			game_list = []
+		updateRank(alive)
 		ejectPlayers(alive, eliminated)
 	
 	for i in range(5):
 		game_list = newRound(alive)
 		tounrament.append(game_list)
 		game_list = []
-
+	
+	updateRank(alive)
 
 if __name__ == '__main__':
 	main()
