@@ -22,6 +22,7 @@ class Player:
 		self.rank = 0
 		self.score = 0
 		self.role = ""
+		self.Score_games = []
 
 	def __str__(self):
 		"""
@@ -29,5 +30,46 @@ class Player:
 		:param self: the player itself
 		:return: player's description
 		"""
-		return ('Player name: ' + str(name)
-			+ 'Current rank: ' + str(rank))
+		return ('Player name: ' + str(self.name) + 'Current rank: ' + str(self.rank)+ 'current score: '+ str(self.score))
+	
+	def __getitem__(self, index):
+		if(index == "role"):
+			value = self.role
+		return value
+	def __setitem__(self, index, value):
+		if(index == "role"):
+			self.role = value
+
+	def ScoreAdd(self, actions):
+		score_game = 0
+		for action in actions:
+			if(self.role == "impostor"):
+				if(action== "undiscovered_murder"):
+					score_game += 3
+				if (action == "win"):
+					score_game += 10
+			if (self.role == "crewmate"):
+				if (action == "unmask_impostor"):
+					score_game += 3
+				if (action == "task_done"):
+					score_game += 1
+				if (action == "win"):
+					score_game += 5
+		self.Score_games.append(score_game)
+
+	def ScoreUpdate(self):
+		count = len(self.Score_games)
+		while(True):
+			self.score += self.Score_games.pop()
+			if (len(self.Score_games) == 0):
+				break
+		self.score /= count
+
+hello = Player(0,"valentin")
+world = Player(1,"Julien")
+hello.__setitem__("role","impostor")
+
+hello.ScoreAdd(["undiscovered_murder","win"])
+hello.ScoreAdd(["undiscovered_murder","win"])
+hello.ScoreUpdate()
+print(hello)
