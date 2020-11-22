@@ -29,5 +29,5 @@ class Player:
 		:param self: the player itself
 		:return: player's description
 		"""
-		return ('Player name: ' + str(name)
-			+ 'Current rank: ' + str(rank))
+		return ('Player name: ' + str(self.name)
+			+ 'Current rank: ' + str(self.rank))
