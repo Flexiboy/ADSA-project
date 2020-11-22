@@ -2,10 +2,7 @@
 # -*- coding: utf-8 -*-
 # Authors: Julien MARTIN-PRIN & Valentin FERNANDES
 
-import random as rnd
-
 from objects.game import *
-from objects.player import *
 
 def setUp():
 	"""
@@ -21,26 +18,21 @@ def setUp():
 		del new_player
 	return player_list
 
-def new_round(alive):
+def newRound(alive):
 	"""
 	Setting up a new round
 	:param alive: the remaining players in the tournament
 	:return: the list of the game
 	"""
 	game_list = []
-	alive_temp = []
 	player_list = []
 	player_number = 0
 
-	#Setting a temporary list to  avoid compromising alive list's data
-	for player in alive:
-		alive_temp.append(player)
+	updateRank(alive)
 
 	for i in range(len(alive) / 10):
 		for j in range(10): #Selecting the players of the game
-			player_number = rnd.randrange(0, len(alive_temp), 1)
-			player_list.append(alive_temp[player_number])
-			alive_temp.pop(player_number)
+			player_list.append(alive[i * 10 + j])
 		new_game = Game(player_list)
 		game_list.append(new_game)
 		del new_game
@@ -54,13 +46,47 @@ def updateRank(alive):
 	:param alive: the remaining players in the tournament
 	"""
 	rank = 0
-	sorted(alive, key=lambda player: player['score'])
+	sorted(alive, key=lambda player: player['score'], reverse = True)
 	for player in alive:
 		rank += 1
 		player['rank'] = rank
 
+def ejectPlayers(alive, eliminated):
+	"""
+	Ejects the players that are too low ranked
+	:param alive: the alive players
+	:param eliminated: the eliminated players
+	"""
+	sorted(alive, key=lambda player: player['rank'], reverse = True)
+	for i in range(10):
+		eliminated.append(alive[0])
+		alive.pop(0)
+
 def main():
+	"""
+	The main
+	"""
 	player_list = setUp()
+	tournament = []
+	game_list = []
+	alive = []
+	eliminated = []
+
+	for player in player_list:
+		alive.append(player)
+
+	while(len(alive) > 10):
+		for i in range(3):
+			game_list = newRound(alive)
+			tournament.append(game_list)
+			game_list = []
+		ejectPlayers(alive, eliminated)
+	
+	for i in range(5):
+		game_list = newRound(alive)
+		tounrament.append(game_list)
+		game_list = []
+
 
 if __name__ == '__main__':
 	main()
