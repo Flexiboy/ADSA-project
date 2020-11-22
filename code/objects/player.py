@@ -30,7 +30,9 @@ class Player:
 		:param self: the player itself
 		:return: player's description
 		"""
-		return ('Player name: ' + str(self.name) + 'Current rank: ' + str(self.rank)+ 'current score: '+ str(self.score))
+		return ('Player name: ' + str(self.name) 
+            + ' Current rank: ' + str(self.rank)
+            + ' Current score: '+ str(self.score))
 	
 	def __getitem__(self, index):
 		if(index == "role"):
@@ -64,12 +66,3 @@ class Player:
 			if (len(self.Score_games) == 0):
 				break
 		self.score /= count
-
-hello = Player(0,"valentin")
-world = Player(1,"Julien")
-hello.__setitem__("role","impostor")
-
-hello.ScoreAdd(["undiscovered_murder","win"])
-hello.ScoreAdd(["undiscovered_murder","win"])
-hello.ScoreUpdate()
-print(hello)
