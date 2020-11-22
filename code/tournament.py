@@ -48,6 +48,17 @@ def new_round(alive):
 
 	return game_list
 
+def updateRank(alive):
+	"""
+	Updates the rank of the players
+	:param alive: the remaining players in the tournament
+	"""
+	rank = 0
+	sorted(alive, key=lambda player: player['score'])
+	for player in alive:
+		rank += 1
+		player['rank'] = rank
+
 def main():
 	player_list = setUp()
 
