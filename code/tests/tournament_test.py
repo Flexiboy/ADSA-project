@@ -11,7 +11,29 @@ class TournamentTest(unittest.TestCase):
 		"""
 		Init of the test cases
 		"""
-		self.
+		self.tnmt = Tournament(10)
+	
+	def test_setup(self):
+		"""
+		Setup test
+		"""
+		player_list = self.tnmt.setup(1)
+		self.assertEqual(len(player_list), 1)
+
+	def test_newround(self):
+		"""
+		New round test
+		"""
+
+	def test_updaterank(self):
+		"""
+		Update rank test
+		"""
+	
+	def test_ejectplayers(self):
+		"""
+		Eject player test
+		"""
 
 if __name__ == '__main__':
-	main()
+	unittest.main()
