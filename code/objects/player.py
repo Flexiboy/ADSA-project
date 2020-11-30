@@ -37,6 +37,10 @@ class Player:
 	def __getitem__(self, index):
 		if(index == "role"):
 			value = self.role
+		if(index == "name"):
+			value = self.name
+		if(index == "id"):
+			value = self._id
 		return value
 	def __setitem__(self, index, value):
 		if(index == "role"):
@@ -46,6 +50,8 @@ class Player:
 		score_game = 0
 		for action in actions:
 			if(self.role == "impostor"):
+				if(action== "kill"):
+					score_game += 1
 				if(action== "undiscovered_murder"):
 					score_game += 3
 				if (action == "win"):
