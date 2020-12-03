@@ -46,23 +46,22 @@ class Player:
 		if(index == "role"):
 			self.role = value
 
-	def ScoreAdd(self, actions):
+	def ScoreAdd(self, action):
 		score_game = 0
-		for action in actions:
-			if(self.role == "impostor"):
-				if(action== "kill"):
-					score_game += 1
-				if(action== "undiscovered_murder"):
-					score_game += 3
-				if (action == "win"):
-					score_game += 10
-			if (self.role == "crewmate"):
-				if (action == "unmask_impostor"):
-					score_game += 3
-				if (action == "task_done"):
-					score_game += 1
-				if (action == "win"):
-					score_game += 5
+		if(self.role == "impostor"):
+			if(action== "kill"):
+				score_game += 1
+			if(action== "undiscovered_murder"):
+				score_game += 3
+			if (action == "win"):
+				score_game += 10
+		if (self.role == "crewmate"):
+			if (action == "unmask_impostor"):
+				score_game += 3
+			if (action == "task_done"):
+				score_game += 1
+			if (action == "win"):
+				score_game += 5
 		self.Score_games.append(score_game)
 
 	def ScoreUpdate(self):

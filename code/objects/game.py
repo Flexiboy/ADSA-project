@@ -8,7 +8,6 @@
 Class game
 
 """
-
 import random
 
 class Game:
@@ -26,10 +25,10 @@ class Game:
         #loop what places random player in list of crew or impostor and set their role
         while(i<10):
             #take a ramdon player
-            rnd = random.randrange(0,9-i, 1)
+            rnd = random.randrange(0,10, 1)
 
             #check if the random player isn't in a list (crewmate or impostor) : no occurence
-            if(self.List_player[rnd] not in self.List_player_impostor or self.List_player[rnd] not in self.List_player_crewmate):
+            if(self.List_player[rnd] not in self.List_player_impostor and self.List_player[rnd] not in self.List_player_crewmate):
 
                 #Add first 2 impostors, then add crewmates 
                 if(i>1):
@@ -39,9 +38,6 @@ class Game:
                     self.List_player[rnd].role="impostor"
                     self.List_player_impostor.append(self.List_player[rnd]) 
                 i+=1 
-            #If the player si already in a list, take another random index in the player list to take another random player. 
-            else :
-                rnd = random.randrange(0,9-i, 1)
 
             
 
@@ -81,7 +77,9 @@ class Game:
             #add score
             self.List_player_impostor[0].ScoreAdd("win")
             self.List_player_impostor[1].ScoreAdd("win")
-            return "Impostors win !"
+            print("Unlike bonnie and clyde, nobody caught the impostors. They killed everyone!")
+            print ("Impostors win !")
+            return 0
 
         # If still two players with one impostors among them, the game is win by impostors
         if(len(alive)== 2):
@@ -89,52 +87,59 @@ class Game:
                 #add score
                 self.List_player_impostor[0].ScoreAdd("win")
                 self.List_player_impostor[1].ScoreAdd("win")
-                return "Impostors win !"
+                print("The last impostor killed everyone. Like Christophe Lambert he is the highlander !!! Glory to the one")
+                print ("Impostors win !")
+                return 0
 
         # If the two impostors are dead (ejected), crewmates win
         if(self.List_player_impostor[0] not in alive and self.List_player_impostor[1] not in alive):
             #add score for each crewmates
-            for i in self.List_player_crewmate:
-                self.List_player_crewmate[i].ScoreAdd("win")
-            return "Crewmates win !"
+            for crewmate in self.List_player_crewmate:
+                crewmate.ScoreAdd("win")
+            print("All impostors ejected !")
+            print ("Crewmates win !")
+            return 0
         
         #if all crewmates have done all tasks (8 crewmates so 8 tasks_done), crewmates win
         if(Task_done == 8):
             #add score for each crewmates
-            for i in self.List_player_crewmate:
-                self.List_player_crewmate[i].ScoreAdd("task_done")
-                self.List_player_crewmate[i].ScoreAdd("win")
-            return "Crewmates win !"
+            for crewmate in self.List_player_crewmate:
+                crewmate.ScoreAdd("task_done")
+                crewmate.ScoreAdd("win")
+            print ("All tasks done !")
+            print ("Crewmates win !")
+            return 0
 
         """
 
         random death
 
         """
-
+        dead_player= []
         #take a random bool : if true, a crewmate is dead
         rnd_death = bool(random.getrandbits(1)) 
         if(rnd_death == True):
 
             #infinite loop
             while True :
-                rnd_crewmate = random.choice(range(0, 7, 1))
-                rnd_killer = random.choice(range(0,1,1))
+                rnd_crewmate = random.choice(range(0, 8, 1))
+                rnd_killer = random.choice(range(0,2,1))
                 
                 # if the random crewmate and impostor is still alive : 
                 # pop the crewmate from the alive list 
                 # Add the score for the killer
                 # break out of the loop
                 if (self.List_player_crewmate[rnd_crewmate] in alive and self.List_player_impostor[rnd_killer] in alive) :
-                    alive.pop(self.List_player_crewmate.index(rnd_crewmate))
+                    alive.pop(alive.index(self.List_player_crewmate[rnd_crewmate]))
+                    dead_player.append(self.List_player_crewmate[rnd_crewmate])
 
-                    self.List_player_impostor[rnd_killer].AddScore("kill")
+                    self.List_player_impostor[rnd_killer].ScoreAdd("kill")
                     break
 
                 # pick another random killer and crewmate
                 else : 
-                    rnd_crewmate = random.choice(range(0, 7, 1))
-                    rnd_killer = random.choice(range(0,1,1))
+                    rnd_crewmate = random.choice(range(0, 8, 1))
+                    rnd_killer = random.choice(range(0,2,1))
 
             """
             If a crewmate has been killed :
@@ -151,46 +156,46 @@ class Game:
                 if(vote == None):
                     print("No one has been ejected")
                 else:
-                    player_ejected = alive.index(vote)
-                    print("player ",player_ejected, " has been ejected")
+                    player_ejected = alive[vote]
+                    print("player ",player_ejected.name, " has been ejected")
 
                     #pop the ejected player from alive list
-                    alive.pop(player_ejected)
+                    alive.pop(vote)
 
                     #if the ejected player was impostor, add score
                     if( player_ejected.role == "impostor"):
                         print(player_ejected.name, " was a impostor")
                         for crewmate in alive:
                             if(crewmate.role == "crewmate"):
-                                crewmate.AddScore("unmask_impostor")
+                                crewmate.ScoreAdd("unmask_impostor")
             
             #If the muder is undiscovered, add scorre
             else : 
                 for impostor in alive:
                     if(impostor.role == "impostor"):
-                        impostor.AddScore("undiscovered_murder")
+                        impostor.ScoreAdd("undiscovered_murder")
 
         """
         infinite loop for tasks done
         """
         while True:
             #max number of crewmates who have done all tasks is 2            
-            rnd_nbplayer_taskdone = random.choice(range(0, 2, 1))
+            rnd_nbplayer_taskdone = random.choice(range(0, 3, 1))
             counter = 0
-            while (counter <= rnd_nbplayer_taskdone):
+            while (counter < rnd_nbplayer_taskdone):
 
                 #Pick a random crewmate
-                rnd_crewmate = random.choice(range(0, 7, 1))
+                rnd_crewmate = random.choice(range(0, 8, 1))
 
                 #if crewmate is still alive
                 if (self.List_player_crewmate[rnd_crewmate] in alive):
-                    self.List_player_crewmate[rnd_crewmate].AddScore("task_done")
+                    self.List_player_crewmate[rnd_crewmate].ScoreAdd("task_done")
                     counter += 1
                 
                 #else pick another crewmate
                 else:
                     rnd_crewmate = random.choice(range(0, 7, 1))
-
+                Task_done+=1
             #break out infinite loop
             break
 
@@ -216,60 +221,69 @@ class Game:
         print("Players still alive : \n")
         for player in alive : 
             if(player.role == "impostor"):
-                print(player.id, ' ', player.name,' impostor ',' ; ')
-            print(player.id, ' ', player.name,' ; ')
+                print(player._id, ' ', player.name,' impostor ')
+            else:
+                print(player._id, ' ', player.name)
         print("vote 10 for skip this vote\n")
 
         #request a vote for each player : the player id or 10 for skip
         for player in alive : 
-            print("Player ", player.id, " " , player.name, "vote for : ")
+            print("Player ", player._id, " " , player.name, "vote for : ")
             #add the vote to the list
             List_votes.append(int(input()))
         
         #Max occurence of an id : max vote
-        max_vote = max(List_votes, key = List_votes.count)
-        #Take the second max vote
-        List_second_max = [value for value in List_votes if value != max_vote]
-        second_max_vote = max(List_second_max, key = List_votes.count)
+        max_vote_counter = 0
+        second_max_vote_counter = 0
 
+        max_vote = max(List_votes, key = List_votes.count)
+        for vote in List_votes:
+            if(vote == max_vote):
+                max_vote_counter+=1
+
+        #Take the second max vote
+        List_second_max = [0]
+        for value in List_votes:
+            if(value != max_vote):
+                List_second_max.append(value)
+
+        second_max_vote = max(List_second_max, key = List_second_max.count)
+        for vote in List_second_max:
+            if(vote == second_max_vote):
+                second_max_vote_counter+=1
+        
         #if the mex vote is higher than the second and isn't a skip vote, return the index
-        if(max_vote > second_max_vote and max_vote != 10):
+        if(max_vote_counter > second_max_vote_counter and max_vote != 10):
             for player in alive:
-                if(player.id == max_vote):
+                if(player._id == max_vote):
                     result = alive.index(player)
         #else return None
         return result
 
-    def Probable_impostors(self,alive,killer,dead):
+    def Probable_impostors(self,alive,deads):
+        graph = { } 
 
-        
-        """
+        List_Probable_impostors = []
+        player_turn = alive + deads
+        for player in alive:
 
-        A finir
+            rnd_players_seen = random.choice(range(0,2,1))
+            if(len(alive)== 2 ):
+                rnd_players_seen = random.choice(range(0,1,1))
+            player_name = player.name
+            graph[player_name] = {}
 
-        Dict = { } 
-        print("Initial nested dictionary:-") 
-        print(Dict) 
-        
-        Dict['Dict1'] = {} 
-        
-        # Adding elements one at a time  
-        Dict['Dict1']['name'] = 'Bob'
-        Dict['Dict1']['age'] = 21
-        print("\nAfter adding dictionary Dict1") 
-        print(Dict) 
-        
-        # Adding whole dictionary 
-        Dict['Dict2'] = {'name': 'Cara', 'age': 25} 
-        print("\nAfter adding dictionary Dict1") 
-        print(Dict) 
+            while(i<=rnd_players_seen):
+                rnd_player = random.choice(range(0,len(player_turn)-1,1))
+                if(player_turn[rnd_player] != player):
+                    # Adding elements one at a time  
+                    for dead in deads :
+                        if(dead.id == player_turn[rnd_player]._id):
+                            List_Probable_impostors.append(player) 
+                    graph[player_name][player_turn[rnd_player].name] = player_turn[rnd_player]._id
+                    i+=1
+                else : 
+                    rnd_player = random.choice(range(0,len(alive)-1,1))
 
-        graph = {'s': {'1': 3, '2': 4},
-            '1': {'5': 2, '2': 1, '4':3},
-            '2': {'3': 3, '5': 1},
-            '3': {'4': 1},
-            '4': {'6': 1},
-            '5': {'4': 2, '6': 3},
-            '6': {}}
-
-        """
+        print(graph)
+        return List_Probable_impostors
