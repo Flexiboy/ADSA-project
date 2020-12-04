@@ -4,12 +4,10 @@
 # IOS 2 Promo 2022
 
 """
-
 Class game
-
 """
 import random
-from objects.player import *
+from player import *
 
 class Game:
 
@@ -50,10 +48,11 @@ class Game:
         Stringify the game object
         :return: increased verbosity of object game
         """
-        return ("The game have :\n 2 impostors : " 
-                + str(self.list_player_impostor)
+        string =  ("The game have :\n 2 impostors : " 
+                + Str_list_name(self.list_player_impostor)
                 + "\n8 crewmates : "
-                + str(self.list_player_crewmate))
+                + Str_list_name(self.list_player_crewmate))
+        return string
     
 
     """
@@ -88,20 +87,7 @@ class Game:
         #take a random bool : if true, a crewmate is dead
         rnd_death = bool(random.getrandbits(1)) 
         if(rnd_death == True):
-            
-            if self.alive[1].role == 'impostor':
-                rnd_killer = random.choice(range(0, 2, 1))
-                rnd_crewmate = random.choice(range(2, len(self.alive), 1))
-                dead_player.append(self.alive[rnd_crewmate])
-                self.alive.pop(rnd_crewmate)
-                self.alive[rnd_killer].ScoreAdd('kill')
-            else:
-                rnd_crewmate = random.choice(range(1, len(self.alive), 1))
-                dead_player.append(self.alive[rnd_crewmate])
-                self.alive.pop(rnd_crewmate)
-                self.alive[0].ScoreAdd('kill')
 
-            """
             #infinite loop
             while True:
                 rnd_crewmate = random.choice(range(0, 8, 1))
@@ -116,7 +102,6 @@ class Game:
                     dead_player.append(self.list_player_crewmate[rnd_crewmate])
                     self.list_player_impostor[rnd_killer].ScoreAdd("kill")
                     break
-            """
 
             # If still only 4 players with 2 impostors amoug them, the game is win by impostors
             if (len(self.alive)== 4 and self.list_player_impostor[0] in self.alive and self.list_player_impostor[1] in self.alive):
@@ -181,6 +166,7 @@ class Game:
                 print("All impostors ejected !")
                 print ("Crewmates win !")
                 return 0
+                
 
              # If still only 4 players with 2 impostors amoug them, the game is win by impostors
             if (len(self.alive)== 4 and self.list_player_impostor[0] in self.alive and self.list_player_impostor[1] in self.alive):
@@ -228,12 +214,9 @@ class Game:
 
     """
     Voting method
-
     Take a list of alive player in the game
-
     return a None if equality or skip vote majority
     return the index of the player with the max vote in the alive list
-
     """
     def Vote(self, alive):
         #Set a list of votes. Set a result on None
@@ -285,9 +268,7 @@ class Game:
 
     """
     Method to get a graph with all alive player and see the meeting between them.
-
     We take two lists, alive and dead players.
-
     return a list of probable impostor (player who was seen with a dead player.)
     """
     def Probable_impostors(self,alive,deads):
@@ -343,10 +324,8 @@ class Game:
 
     """
     Method to update the score of each player.
-
     Each time we add a score, it's stored in a list of score. So score for each turn in a game
     is stored
-
     At the end of a Game, we call the player function Score_game, to addition all scores in one and 
     add it to the Score List of Games (tournement).
     """
