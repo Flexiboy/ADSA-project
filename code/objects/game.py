@@ -89,6 +89,19 @@ class Game:
         rnd_death = bool(random.getrandbits(1)) 
         if(rnd_death == True):
             
+            if self.alive[1].role == 'impostor':
+                rnd_killer = random.choice(range(0, 2, 1))
+                rnd_crewmate = random.choice(range(2, len(self.alive), 1))
+                dead_player.append(self.alive[rnd_crewmate])
+                self.alive.pop(rnd_crewmate)
+                self.alive[rnd_killer].ScoreAdd('kill')
+            else:
+                rnd_crewmate = random.choice(range(1, len(self.alive), 1))
+                dead_player.append(self.alive[rnd_crewmate])
+                self.alive.pop(rnd_crewmate)
+                self.alive[0].ScoreAdd('kill')
+
+            """
             #infinite loop
             while True:
                 rnd_crewmate = random.choice(range(0, 8, 1))
@@ -103,6 +116,7 @@ class Game:
                     dead_player.append(self.list_player_crewmate[rnd_crewmate])
                     self.list_player_impostor[rnd_killer].ScoreAdd("kill")
                     break
+            """
 
             # If still only 4 players with 2 impostors amoug them, the game is win by impostors
             if (len(self.alive)== 4 and self.list_player_impostor[0] in self.alive and self.list_player_impostor[1] in self.alive):
@@ -355,6 +369,6 @@ p10 = Player(9,'paul')
 Game_players = [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10]
 
 g = Game(1,Game_players)
-g.Start(Game_players)
+g.Start()
 g.Update_score_game(Game_players)
 print("")
