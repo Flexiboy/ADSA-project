@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
-# Authors: Julien MARTIN-PRIN
+# Authors: Julien MARTIN-PRIN and Valentin FERNANDES
 # IOS 2 Promo 2022
 
 """
@@ -9,6 +9,7 @@ Class game
 
 """
 import random
+from player import *
 
 class Game:
     """
@@ -40,8 +41,6 @@ class Game:
                 i+=1 
 
             
-
-
     """
     str function
 
@@ -67,39 +66,12 @@ class Game:
     Take a list of alive players (list of player for the first lauch) and a number of tasks done
     """
     def Start(self , alive, Task_done = 0):
-
+        
         """
+
         winner conditionns and adding score
 
         """
-        # If still only 4 players with 2 impostors amoug them, the game is win by impostors
-        if (len(alive)== 4 and self.List_player_impostor[0] in alive and self.List_player_impostor[1] in alive):
-            #add score
-            self.List_player_impostor[0].ScoreAdd("win")
-            self.List_player_impostor[1].ScoreAdd("win")
-            print("Unlike bonnie and clyde, nobody caught the impostors. They killed everyone!")
-            print ("Impostors win !")
-            return 0
-
-        # If still two players with one impostors among them, the game is win by impostors
-        if(len(alive)== 2):
-            if(self.List_player_impostor[0] in alive or self.List_player_impostor[1] in alive):
-                #add score
-                self.List_player_impostor[0].ScoreAdd("win")
-                self.List_player_impostor[1].ScoreAdd("win")
-                print("The last impostor killed everyone. Like Christophe Lambert he is the highlander !!! Glory to the one")
-                print ("Impostors win !")
-                return 0
-
-        # If the two impostors are dead (ejected), crewmates win
-        if(self.List_player_impostor[0] not in alive and self.List_player_impostor[1] not in alive):
-            #add score for each crewmates
-            for crewmate in self.List_player_crewmate:
-                crewmate.ScoreAdd("win")
-            print("All impostors ejected !")
-            print ("Crewmates win !")
-            return 0
-        
         #if all crewmates have done all tasks (8 crewmates so 8 tasks_done), crewmates win
         if(Task_done == 8):
             #add score for each crewmates
@@ -141,17 +113,41 @@ class Game:
                     rnd_crewmate = random.choice(range(0, 8, 1))
                     rnd_killer = random.choice(range(0,2,1))
 
+            # If still only 4 players with 2 impostors amoug them, the game is win by impostors
+            if (len(alive)== 4 and self.List_player_impostor[0] in alive and self.List_player_impostor[1] in alive):
+                #add score
+                self.List_player_impostor[0].ScoreAdd("win")
+                self.List_player_impostor[1].ScoreAdd("win")
+                print("Unlike bonnie and clyde, nobody caught the impostors. They killed everyone!")
+                print ("Impostors win !")
+                return 0
+
+            # If still two players with one impostors among them, the game is win by impostors
+            if(len(alive)== 2):
+                if(self.List_player_impostor[0] in alive or self.List_player_impostor[1] in alive):
+                    #add score
+                    self.List_player_impostor[0].ScoreAdd("win")
+                    self.List_player_impostor[1].ScoreAdd("win")
+                    print("The last impostor killed everyone. Like Christophe Lambert he is the highlander !!! Glory to the one")
+                    print ("Impostors win !")
+                    return 0
+
             """
             If a crewmate has been killed :
+            
             """
+            
             #take a random bool : if true, the dead crewmate has been discovered and players must vote
             rnd_discover_kill = bool(random.getrandbits(1))            
             if rnd_discover_kill == True : 
 
                 #call the vote function
                 print(self.List_player_crewmate[rnd_crewmate].name, " is dead, you must vote :")
+                List_Probable_impostors = self.Probable_impostors(alive, dead_player)
+                print("This the list of probable impostors : ")
+                self.Str_list_name(List_Probable_impostors)
                 vote = self.Vote(alive)
-
+               
                 #if None, nothing happen
                 if(vote == None):
                     print("No one has been ejected")
@@ -174,13 +170,41 @@ class Game:
                 for impostor in alive:
                     if(impostor.role == "impostor"):
                         impostor.ScoreAdd("undiscovered_murder")
+            
+                # If the two impostors are dead (ejected), crewmates win
+            if(self.List_player_impostor[0] not in alive and self.List_player_impostor[1] not in alive):
+                #add score for each crewmates
+                for crewmate in self.List_player_crewmate:
+                    crewmate.ScoreAdd("win")
+                print("All impostors ejected !")
+                print ("Crewmates win !")
+                return 0
+
+             # If still only 4 players with 2 impostors amoug them, the game is win by impostors
+            if (len(alive)== 4 and self.List_player_impostor[0] in alive and self.List_player_impostor[1] in alive):
+                #add score
+                self.List_player_impostor[0].ScoreAdd("win")
+                self.List_player_impostor[1].ScoreAdd("win")
+                print("Unlike bonnie and clyde, nobody caught the impostors. They killed everyone!")
+                print ("Impostors win !")
+                return 0
+
+            # If still two players with one impostors among them, the game is win by impostors
+            if(len(alive)== 2):
+                if(self.List_player_impostor[0] in alive or self.List_player_impostor[1] in alive):
+                    #add score
+                    self.List_player_impostor[0].ScoreAdd("win")
+                    self.List_player_impostor[1].ScoreAdd("win")
+                    print("The last impostor killed everyone. Like Christophe Lambert he is the highlander !!! Glory to the one")
+                    print ("Impostors win !")
+                    return 0
 
         """
         infinite loop for tasks done
         """
         while True:
             #max number of crewmates who have done all tasks is 2            
-            rnd_nbplayer_taskdone = random.choice(range(0, 3, 1))
+            rnd_nbplayer_taskdone = random.choice(range(0, 2, 1))
             counter = 0
             while (counter < rnd_nbplayer_taskdone):
 
@@ -260,30 +284,92 @@ class Game:
         #else return None
         return result
 
-    def Probable_impostors(self,alive,deads):
-        graph = { } 
+    """
+    Method to get a graph with all alive player and see the meeting between them.
 
+    We take two lists, alive and dead players.
+
+    return a list of probable impostor (player who was seen with a dead player.)
+    """
+    def Probable_impostors(self,alive,deads):
+        #set graph and lists
+        graph = { } 
         List_Probable_impostors = []
         player_turn = alive + deads
+
+        #for each player alive (player who can talk during the vote)
         for player in alive:
 
-            rnd_players_seen = random.choice(range(0,2,1))
+            #Set a random number of player saw.
+            rnd_players_seen = random.choice(range(1,3,1))
+            #If left only two player, the number can only be 0 or 1
             if(len(alive)== 2 ):
-                rnd_players_seen = random.choice(range(0,1,1))
+                rnd_players_seen = random.choice(range(1,2,1))
+
+            #To the graph, we add a dictionnary for the player
             player_name = player.name
             graph[player_name] = {}
 
-            while(i<=rnd_players_seen):
-                rnd_player = random.choice(range(0,len(player_turn)-1,1))
-                if(player_turn[rnd_player] != player):
-                    # Adding elements one at a time  
+            #For each player seen
+            i=0
+            while(i<rnd_players_seen):
+
+                #Choose a random player in all players of the turn (included dead players)
+                rnd_player = random.choice(range(0,len(player_turn),1))
+
+                #if the random player is different of the player (no occurrence)
+                if(player_turn[rnd_player] != player): 
+                    #Check if the current player didn't see a dead player, check for all deads
                     for dead in deads :
-                        if(dead.id == player_turn[rnd_player]._id):
+                        if(dead._id == player_turn[rnd_player]._id):
+                            #if yes, add the player to the probable impostors list
                             List_Probable_impostors.append(player) 
+                    
+                    #add the player saw to the dictionnary
                     graph[player_name][player_turn[rnd_player].name] = player_turn[rnd_player]._id
                     i+=1
                 else : 
                     rnd_player = random.choice(range(0,len(alive)-1,1))
 
-        print(graph)
+        print("who saw who? I can help you sherlock : \n",graph)
         return List_Probable_impostors
+
+    """
+    Method to print the content of a player list
+    """
+    def Str_list_name(self,liste):
+        if(liste != None):
+             for player in liste:
+                 print(player.name," ")
+
+    """
+    Method to update the score of each player.
+
+    Each time we add a score, it's stored in a list of score. So score for each turn in a game
+    is stored
+
+    At the end of a Game, we call the player function Score_game, to addition all scores in one and 
+    add it to the Score List of Games (tournement).
+    """
+    def Update_score_game(self,Liste):
+        for player in Liste:
+            player.Score_game()
+  
+        
+p1 = Player(0,'valentin')
+p2 = Player(1,'brunelle')
+p3 = Player(2,'marc')
+p4 = Player(3,'jean')
+p5 = Player(4,'steph')
+p6 = Player(5,'marie')
+p7 = Player(6,'franck')
+p8 = Player(7,'antoine')
+p9 = Player(8,'lea')
+p10 = Player(9,'paul')
+
+Game_players = [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10]
+
+g = Game(1,Game_players)
+g.Start(Game_players)
+g.Update_score_game(Game_players)
+print("")

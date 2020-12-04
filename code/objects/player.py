@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
-# Authors: Julien MARTIN-PRIN
+# Authors: Julien MARTIN-PRIN and Valentin FERNANDES
 # IOS 2 Promo 2022
 
 """
@@ -23,6 +23,7 @@ class Player:
 		self.score = 0
 		self.role = ""
 		self.Score_games = []
+		self.Score_turns = []
 
 	def __str__(self):
 		"""
@@ -46,6 +47,11 @@ class Player:
 		if(index == "role"):
 			self.role = value
 
+	"""
+	called during a game
+
+	add the score in Score turns
+	"""
 	def ScoreAdd(self, action):
 		score_game = 0
 		if(self.role == "impostor"):
@@ -62,8 +68,28 @@ class Player:
 				score_game += 1
 			if (action == "win"):
 				score_game += 5
-		self.Score_games.append(score_game)
+		self.Score_turns.append(score_game)
 
+	"""
+	called at the end of a game
+
+	reset the Score_turns list and add the final score to 
+	the Score games list
+	"""
+	def Score_game(self):
+		score_game = 0
+		for score in self.Score_turns:
+			score_game += score
+		self.Score_turns = []
+		self.Score_games.append(score_game)
+		
+	"""
+	called for each elimination phase of the tournament.
+
+	Addition of all score of Score games list, reset it and
+	set the player score by the addition / number of games (Score games list length) 
+
+	"""
 	def ScoreUpdate(self):
 		count = len(self.Score_games)
 		while(True):
