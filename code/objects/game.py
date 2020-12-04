@@ -12,15 +12,16 @@ import random
 from player import *
 
 class Game:
+
     """
     Game constructor
 
     """
-    def __init__(self,_id,List_player):
+    def __init__(self, _id, list_player):
         self._id = _id
-        self.List_player_impostor = []
-        self.List_player_crewmate = []
-        self.List_player = List_player
+        self.list_player_impostor = []
+        self.list_player_crewmate = []
+        self.list_player = list_player
         i = 0 
 
         #loop what places random player in list of crew or impostor and set their role
@@ -29,15 +30,15 @@ class Game:
             rnd = random.randrange(0,10, 1)
 
             #check if the random player isn't in a list (crewmate or impostor) : no occurence
-            if(self.List_player[rnd] not in self.List_player_impostor and self.List_player[rnd] not in self.List_player_crewmate):
+            if(self.list_player[rnd] not in self.list_player_impostor and self.list_player[rnd] not in self.list_player_crewmate):
 
                 #Add first 2 impostors, then add crewmates 
                 if(i>1):
-                    self.List_player[rnd].role="crewmate"
-                    self.List_player_crewmate.append(self.List_player[rnd])
+                    self.list_player[rnd].role="crewmate"
+                    self.list_player_crewmate.append(self.list_player[rnd])
                 else :
-                    self.List_player[rnd].role="impostor"
-                    self.List_player_impostor.append(self.List_player[rnd]) 
+                    self.list_player[rnd].role="impostor"
+                    self.list_player_impostor.append(self.list_player[rnd]) 
                 i+=1 
 
             
@@ -49,10 +50,10 @@ class Game:
 
     def __str__(self):
         return ( "The game have :\n 2 impostors : " 
-        + str(self.List_player_impostor)
+        + str(self.list_player_impostor)
         +"\n"
         +"8 crewmates : "
-        +str(self.List_player_crewmate)
+        +str(self.list_player_crewmate)
         )
     
 
@@ -75,7 +76,7 @@ class Game:
         #if all crewmates have done all tasks (8 crewmates so 8 tasks_done), crewmates win
         if(Task_done == 8):
             #add score for each crewmates
-            for crewmate in self.List_player_crewmate:
+            for crewmate in self.list_player_crewmate:
                 crewmate.ScoreAdd("task_done")
                 crewmate.ScoreAdd("win")
             print ("All tasks done !")
@@ -101,11 +102,11 @@ class Game:
                 # pop the crewmate from the alive list 
                 # Add the score for the killer
                 # break out of the loop
-                if (self.List_player_crewmate[rnd_crewmate] in alive and self.List_player_impostor[rnd_killer] in alive) :
-                    alive.pop(alive.index(self.List_player_crewmate[rnd_crewmate]))
-                    dead_player.append(self.List_player_crewmate[rnd_crewmate])
+                if (self.list_player_crewmate[rnd_crewmate] in alive and self.list_player_impostor[rnd_killer] in alive) :
+                    alive.pop(alive.index(self.list_player_crewmate[rnd_crewmate]))
+                    dead_player.append(self.list_player_crewmate[rnd_crewmate])
 
-                    self.List_player_impostor[rnd_killer].ScoreAdd("kill")
+                    self.list_player_impostor[rnd_killer].ScoreAdd("kill")
                     break
 
                 # pick another random killer and crewmate
@@ -114,20 +115,20 @@ class Game:
                     rnd_killer = random.choice(range(0,2,1))
 
             # If still only 4 players with 2 impostors amoug them, the game is win by impostors
-            if (len(alive)== 4 and self.List_player_impostor[0] in alive and self.List_player_impostor[1] in alive):
+            if (len(alive)== 4 and self.list_player_impostor[0] in alive and self.list_player_impostor[1] in alive):
                 #add score
-                self.List_player_impostor[0].ScoreAdd("win")
-                self.List_player_impostor[1].ScoreAdd("win")
+                self.list_player_impostor[0].ScoreAdd("win")
+                self.list_player_impostor[1].ScoreAdd("win")
                 print("Unlike bonnie and clyde, nobody caught the impostors. They killed everyone!")
                 print ("Impostors win !")
                 return 0
 
             # If still two players with one impostors among them, the game is win by impostors
             if(len(alive)== 2):
-                if(self.List_player_impostor[0] in alive or self.List_player_impostor[1] in alive):
+                if(self.list_player_impostor[0] in alive or self.list_player_impostor[1] in alive):
                     #add score
-                    self.List_player_impostor[0].ScoreAdd("win")
-                    self.List_player_impostor[1].ScoreAdd("win")
+                    self.list_player_impostor[0].ScoreAdd("win")
+                    self.list_player_impostor[1].ScoreAdd("win")
                     print("The last impostor killed everyone. Like Christophe Lambert he is the highlander !!! Glory to the one")
                     print ("Impostors win !")
                     return 0
@@ -142,7 +143,7 @@ class Game:
             if rnd_discover_kill == True : 
 
                 #call the vote function
-                print(self.List_player_crewmate[rnd_crewmate].name, " is dead, you must vote :")
+                print(self.list_player_crewmate[rnd_crewmate].name, " is dead, you must vote :")
                 List_Probable_impostors = self.Probable_impostors(alive, dead_player)
                 print("This the list of probable impostors : ")
                 self.Str_list_name(List_Probable_impostors)
@@ -172,7 +173,7 @@ class Game:
                         impostor.ScoreAdd("undiscovered_murder")
             
                 # If the two impostors are dead (ejected), crewmates win
-            if(self.List_player_impostor[0] not in alive and self.List_player_impostor[1] not in alive):
+            if(self.list_player_impostor[0] not in alive and self.List_player_impostor[1] not in alive):
                 #add score for each crewmates
                 for crewmate in self.List_player_crewmate:
                     crewmate.ScoreAdd("win")
