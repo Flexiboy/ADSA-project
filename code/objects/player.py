@@ -4,9 +4,7 @@
 # IOS 2 Promo 2022
 
 """
-
 Class Player
-
 """
 
 class Player:
@@ -49,7 +47,6 @@ class Player:
 
 	"""
 	called during a game
-
 	add the score in Score turns
 	"""
 	def ScoreAdd(self, action):
@@ -72,7 +69,6 @@ class Player:
 
 	"""
 	called at the end of a game
-
 	reset the Score_turns list and add the final score to 
 	the Score games list
 	"""
@@ -85,10 +81,8 @@ class Player:
 		
 	"""
 	called for each elimination phase of the tournament.
-
 	Addition of all score of Score games list, reset it and
 	set the player score by the addition / number of games (Score games list length) 
-
 	"""
 	def ScoreUpdate(self):
 		count = len(self.Score_games)
