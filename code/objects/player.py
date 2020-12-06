@@ -42,6 +42,8 @@ class Player:
 			value = self.name
 		if(index == "id"):
 			value = self._id
+		if(index == "score_games"):
+			value = self.Score_games
 		return value
 	def __setitem__(self, index, value):
 		if(index == "role"):

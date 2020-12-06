@@ -33,15 +33,16 @@ class Game:
 
         # Loop that places random player in list of crew or impostor and set their role
         for player in self.alive:
+            rnd_score = random.choice(range(0,13,1))
             if impostor_count > 0:
                 impostor_count -= 1
                 player.role = "impostor"
+                player.Score_games.append(rnd_score)
                 self.list_player_impostor.append(player)
             else:
                 player.role = "crewmate"
+                player.Score_games.append(rnd_score)
                 self.list_player_crewmate.append(player)
-
-
 
     def __str__(self):
         """
@@ -49,17 +50,12 @@ class Game:
         :return: increased verbosity of object game
         """
         string =  ("The game have :\n 2 impostors : " 
-                + Str_list_name(self.list_player_impostor)
+                + self.Str_list_name(self.list_player_impostor)
                 + "\n8 crewmates : "
-                + Str_list_name(self.list_player_crewmate))
+                + self.Str_list_name(self.list_player_crewmate))
         return string
     
 
-    """
-    This will play all the game : eliminations, votes, add score, win and lose
-    Recursive function for the complexity. each recursivity is a turn in the game
-    Take a list of alive players (list of player for the first lauch) and a number of tasks done
-    """
 
     def Start(self, task_done = 0):
         """
@@ -69,10 +65,16 @@ class Game:
         :return:
         """
         
+        """
+        This will play all the game : eliminations, votes, add score, win and lose
+        Recursive function for the complexity. each recursivity is a turn in the game
+        Take a list of alive players (list of player for the first lauch) and a number of tasks done
+        """
+
         # winner conditionns and adding score
 
         # if all crewmates have done all tasks (8 crewmates so 8 tasks_done), crewmates win
-        if(task_done == 8):
+        if(task_done == 16):
             #add score for each crewmates
             for crewmate in self.list_player_crewmate:
                 crewmate.ScoreAdd("task_done")
@@ -211,14 +213,16 @@ class Game:
         #End of the turn, retry with the players still alive
         return self.Start(task_done)
 
+    def Vote(self, alive,random_vote=True):
+        """
+        Voting method
+        Take a list of alive player in the game
+        return a None if equality or skip vote majority
+        return the index of the player with the max vote in the alive list
 
-    """
-    Voting method
-    Take a list of alive player in the game
-    return a None if equality or skip vote majority
-    return the index of the player with the max vote in the alive list
-    """
-    def Vote(self, alive):
+        if we want manual vote, set the parameter random to False
+        """
+
         #Set a list of votes. Set a result on None
         list_votes = []
         result = None
@@ -231,12 +235,20 @@ class Game:
             else:
                 print(player._id, ' ', player.name)
         print("vote 10 for skip this vote\n")
-
+      
         #request a vote for each player : the player id or 10 for skip
         for player in alive : 
+
+            rnd_player = random.choice(alive)
             print("Player ", player._id, " " , player.name, "vote for : ")
-            #add the vote to the list
-            list_votes.append(int(input()))
+            
+            #if we want random vote
+            if(random_vote == True):
+                #add the vote to the list 
+                print(rnd_player._id)
+                list_votes.append(rnd_player._id)
+            else:
+                list_votes.append(int(input()))
         
         #Max occurence of an id : max vote
         max_vote_counter = 0
@@ -266,12 +278,13 @@ class Game:
         #else return None
         return result
 
-    """
-    Method to get a graph with all alive player and see the meeting between them.
-    We take two lists, alive and dead players.
-    return a list of probable impostor (player who was seen with a dead player.)
-    """
-    def Probable_impostors(self,alive,deads):
+    def Probable_impostors(self,alive,deads,):
+        """
+        Method to get a graph with all alive player and see the meeting between them.
+        We take two lists, alive and dead players.
+        return a list of probable impostor (player who was seen with a dead player.)
+        """
+
         #set graph and lists
         graph = { } 
         list_Probable_impostors = []
@@ -314,26 +327,104 @@ class Game:
         print("who saw who? I can help you sherlock : \n", graph)
         return list_Probable_impostors
 
-    """
-    Method to print the content of a player list
-    """
-    def Str_list_name(self, liste):
+    def Str_list_name(self, liste):    
+        """
+        Method to print the content of a player list
+        """
+
         if(liste != None):
              for player in liste:
                  print(player.name," ")
 
-    """
-    Method to update the score of each player.
-    Each time we add a score, it's stored in a list of score. So score for each turn in a game
-    is stored
-    At the end of a Game, we call the player function Score_game, to addition all scores in one and 
-    add it to the Score List of Games (tournement).
-    """
     def Update_score_game(self, liste):
+        """
+        Method to update the score of each player.
+        Each time we add a score, it's stored in a list of score. So score for each turn in a game
+        is stored
+        At the end of a Game, we call the player function Score_game, to addition all scores in one and 
+        add it to the Score List of Games (tournement).
+        """
         for player in liste:
             player.Score_game()
   
-        
+    def bellman_ford(self,graph, source):
+        # Step 1: Prepare the distance and predecessor for each node
+        distance, predecessor = dict(), dict()
+        for node in graph:
+            distance[node], predecessor[node] = float('inf'), None
+        distance[source] = 0
+
+        # Step 2: Relax the edges
+        for _ in range(len(graph) - 1):
+            for node in graph:
+                for neighbour in graph[node]:
+                    # If the distance between the node and the neighbour is lower than the current, store it
+                    if distance[neighbour] > distance[node] + graph[node][neighbour]:
+                        distance[neighbour], predecessor[neighbour] = distance[node] + graph[node][neighbour], node
+
+        # Step 3: Check for negative weight cycles
+        for node in graph:
+            for neighbour in graph[node]:
+                assert distance[neighbour] <= distance[node] + graph[node][neighbour], "Negative weight cycle."
+    
+        return distance, predecessor 
+
+    def Probable_impostors_Project(self,list_player):
+        """
+        Method to find probable impostor in a graph
+        return:list of impostors
+        """
+
+
+        impostors = []
+
+
+        """
+        TEST AVEC LA LISTE DES JOUEURS
+
+        if(len(list_player)!=10):
+            return 'the lenght of player list must be 10'
+        inf = 99999999999999
+        graph = {list_player[0]._id: {list_player[1]._id: 0, list_player[4]._id: 0, list_player[5]._id: 0},
+                    list_player[1]._id: {list_player[0]._id: 0 , list_player[2]._id: 1, list_player[6]._id: 1},
+                    list_player[2]._id: {list_player[1]._id: 1, list_player[3]._id: 1, list_player[7]._id: 1},
+                    list_player[3]._id: {list_player[2]._id: 1, list_player[4]._id: 1, list_player[8]._id: 1},
+                    list_player[4]._id: {list_player[0]._id: 0, list_player[3]._id: 1, list_player[9]._id: 1},
+                    list_player[5]._id: {list_player[0]._id: 0, list_player[7]._id: 1, list_player[8]._id: 1},
+                    list_player[6]._id: {list_player[1]._id: 1, list_player[8]._id: 1, list_player[9]._id: 1},
+                    list_player[7]._id: {list_player[2]._id: 1, list_player[5]._id: 1, list_player[9]._id: 1},
+                    list_player[8]._id: {list_player[3]._id: 1, list_player[5]._id: 1, list_player[6]._id: 1},
+                    list_player[9]._id: {list_player[4]._id: 1, list_player[6]._id: 1, list_player[7]._id: 1},
+                    }
+        """
+
+        """
+        TEST EN DUR
+        """
+        graph = {'0': {'1': 0, '4': 0, '5': 0},
+                    '1': {'0': 0 , '2': 100, '6': 100},
+                    '2': {'1': 100, '3': 100, '7': 100},
+                    '3': {'2': 100, '4': 100, '8': 100},
+                    '4': {'0': 0, '3': 100, '9': 100},
+                    '5': {'0': 0, '7': 100, '8': 100},
+                    '6': {'1': 100, '8': 100, '9': 100},
+                    '7': {'2': 100, '5': 100, '9': 100},
+                    '8': {'3': 100, '5': 100, '6': 100},
+                    '9': {'2': 100, '5': 100, '9': 100},
+                    
+                    }       
+        distance_Bellman, predecessor_Bellman = self.bellman_ford(graph, source='0') #we call bellmain_ford
+        print(distance_Bellman) # we take the dictionnary distance
+
+
+        for player in distance_Bellman:
+            if(distance_Bellman[player]==0):
+                impostors.append(player)
+        impostors.pop(0) #  pop the first player because it's the source player (he saw himself)
+        return impostors
+
+
+    
 p1 = Player(0,'valentin')
 p2 = Player(1,'brunelle')
 p3 = Player(2,'marc')
@@ -346,8 +437,14 @@ p9 = Player(8,'lea')
 p10 = Player(9,'paul')
 
 Game_players = [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10]
-
 g = Game(1,Game_players)
+
+print(g.Probable_impostors_Project(Game_players))
+
+
 g.Start()
 g.Update_score_game(Game_players)
 print("")
+
+
+
