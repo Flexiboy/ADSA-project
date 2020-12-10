@@ -55,7 +55,7 @@ class Tournament:
 		player_list = []
 		player_number = 0
 
-		updateRank(self.alive)
+		updateRank()
 
 		for i in range(len(self.alive) / 10):
 			for j in range(10): #Selecting the players of the game
@@ -85,6 +85,22 @@ class Tournament:
 		for i in range(10):
 		self.eliminated.append(alive[0])
 		self.alive.pop(0)
+
+	def showLeaderboard():
+		"""
+		Shows the Leaderboard
+		"""
+		sorted(self.player_list, key=lambda player: player['rank'], reverse = False)
+		for player in self.player_list:
+			print(player)
+
+	def showTop10():
+		"""
+		Shows the TOP 10 players
+		"""
+		updateRank()
+		for i  in range(10):
+			print(f'{i}. {self.alive[i]}')
 
 def main():
 	"""
