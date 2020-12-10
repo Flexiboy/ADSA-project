@@ -30,6 +30,7 @@ class Tournament:
 			game_list = []
 	
 		updateRank()
+		showTop10()
 
 	def setup(self, numberOfPlayers):
 		"""
