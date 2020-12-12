@@ -25,14 +25,15 @@ class Map:
 			for path in paths:
 				with open(path) as inp:
 					name = str(inp[0])
-					connected = list(inp[1])
-					vents = list(inp[2])
-					tasks = list(inp[3])
-					sabotage = list(inp[4])
+					connected_rooms = list(inp[1])
+					connected_corr = list(inp[2])
+					vents = list(inp[3])
+					tasks = list(inp[4])
+					sabotage = list(inp[5])
 					form = []
-					for i in range(5, len(inp):
+					for i in range(6, len(inp):
 						form.append(list(i))
-					r = Room(name, connected, vents, tasks, sabotage)
+					r = Room(name, connected_rooms, connected_corr, vents, tasks, sabotage)
 					self.rooms.append(r)
 		except(e):
 			pass
