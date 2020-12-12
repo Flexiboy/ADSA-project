@@ -21,18 +21,22 @@ class Map:
 		:param path: the path to the files containing init infos
 		"""
 		self.rooms = []
-		for path in paths:
-			with open(path) as inp:
-				name = inp[0]
-				connected = inp[1]
-				vents = inp[2]
-				tasks = inp[3]
-				sabotage = inp[4]
-				form = []
-				for i in range(5, len(inp):
-					form.append(i)
-				r = Room(name, connected, vents, tasks, sabotage)
-				self.rooms.append( 
+		try:
+			for path in paths:
+				with open(path) as inp:
+					name = str(inp[0])
+					connected = list(inp[1])
+					vents = list(inp[2])
+					tasks = list(inp[3])
+					sabotage = list(inp[4])
+					form = []
+					for i in range(5, len(inp):
+						form.append(list(i))
+					r = Room(name, connected, vents, tasks, sabotage)
+					self.rooms.append(r)
+		except(e):
+			pass
+
         	self.map_impostor = {
 			'cafeteria' : {'weapons' : 1 , 'upper e' : 7 , 'medbay' : 2 , 'admin' : 2 , 'storage' : 2 , 'admin' : 0 },
                 	'weapons' : {'cafeteria' : 1, 'o2' : 2 , 'navigation':5, 'shield' : 7 , 'navigation ' : 0 },
