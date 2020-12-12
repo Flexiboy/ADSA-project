@@ -1,0 +1,6 @@
+Storage
+['Corridor 4', 'Corridor 5', 'Corridor 7']
+[[]]
+['storage-1', 'storage-2']
+[]
+[[]]

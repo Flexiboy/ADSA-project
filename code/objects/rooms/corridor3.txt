@@ -1,0 +1,6 @@
+Corridor 3
+['Weapons', 'Navigation', 'O2', 'Shield']
+[['Cafeteria', 'Corridor 3'], ['Corridor 3', 'Room 1']]
+['corridor3-1']
+[]
+[[]]

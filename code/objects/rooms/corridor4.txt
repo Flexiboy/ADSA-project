@@ -1,0 +1,6 @@
+Corridor 4
+['Shield', 'Room 2', 'Storage']
+[[]]
+[]
+[]
+[[]]

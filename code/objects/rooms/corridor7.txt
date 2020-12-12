@@ -1,0 +1,6 @@
+Corridor 7
+['Cafeteria', 'Room 1', 'Storage']
+[[]]
+['corridor7-1']
+[]
+[[]]

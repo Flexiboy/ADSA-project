@@ -1,0 +1,6 @@
+Electrical
+['Corridor 5']
+[['Electrical', 'Security'], ['Electrical', 'Medbay’]]
+['electrical-1', 'electrical-2', 'electrical-3', 'electrical-4']
+['sabotage-electrical']
+[[]]

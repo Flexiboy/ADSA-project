@@ -1,0 +1,6 @@
+Reactor
+['Corridor 6']
+[['Reactor', 'Lower E'], ['Reactor', 'Upper E']]
+['reactor-1', 'reactor-2', 'reactor-3']
+['sabotage-reactor-1', 'sabotage-reactor-2']
+[[]]

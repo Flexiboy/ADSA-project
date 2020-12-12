@@ -1,0 +1,6 @@
+Medbay
+['Corridor 1']
+[['Medbay', 'Security'], ['Electrical', 'Medaby']
+['medbay-1', 'medbay-2']
+[]
+[[]]

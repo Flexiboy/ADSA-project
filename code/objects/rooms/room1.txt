@@ -1,0 +1,6 @@
+Room 1
+['Corridor 7']
+[['Room 1', 'Cafeteria'], ['Room 1', 'Corridor 3']]
+['room1-1é, 'room1-2']
+['sabotage-room1']
+[[]]
