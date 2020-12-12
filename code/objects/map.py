@@ -3,6 +3,9 @@
 # Authors: Julien MARTIN-PRIN and Valentin FERNANDES
 # IOS 2 Promo 2022
 
+from objects.room import *
+from objects.player import *
+
 """
 
 Class Map

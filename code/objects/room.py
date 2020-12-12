@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*-
 # Authors: Julien MARTIN-PRIN & Valentin FERNANDES
 
+from objects.vent import *
+from objects.task import *
+from objects.sabotage import *
+
 class Room:
 	
 	def __init__(self, name, form, connected):
@@ -13,8 +17,10 @@ class Room:
 		# The model of the form will be a matrix with different values in it:
 		# 0, this is void
 		# 1, this is a block without any specification
-		# 2, this is a block with a task
-		# 3, this is a sabotage location
-		# 4, this is a vent location
 		# -1, this is a door location
 		self.connected = connected # the rooms that are connected to this one
+
+class Corridor(Room):
+	
+	def __init__(self):
+		pass
