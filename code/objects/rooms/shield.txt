@@ -1,4 +1,5 @@
 Shield
+[['Weapons', 7], ['O2', 7], ['Navigations', 7], ['Communication', 1], ['Storage', 3]]
 ['Corridor 3', 'Corridor 4']
 [['Shield', 'Navigation']]
 ['shield-1', 'shield-2']

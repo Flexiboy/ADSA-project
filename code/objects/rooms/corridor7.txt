@@ -1,5 +1,6 @@
 Corridor 7
-['Cafeteria', 'Room 1', 'Storage']
+[]
+['Cafeteria', 'Admin', 'Storage']
 [[]]
 ['corridor7-1']
 []

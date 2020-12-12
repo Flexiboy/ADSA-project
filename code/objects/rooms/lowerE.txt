@@ -1,4 +1,5 @@
 Lower E
+[['Electrical', 5], ['Storage', 8], ['Security', 4], ['Reactor', 4], ['Upper E', 6]]
 ['Corridor 5', 'Corridor 6']
 [['Lower E', 'Reactor']]
 ['lowere-1', 'lowere-2', 'lowere-3']

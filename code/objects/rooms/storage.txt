@@ -1,4 +1,5 @@
 Storage
+[['Communication', 2], ['Shield', 3], ['Admin', 1], ['Cafeteria', 2], ['Electrical', 4], ['Lower E', 8]]
 ['Corridor 4', 'Corridor 5', 'Corridor 7']
 [[]]
 ['storage-1', 'storage-2']

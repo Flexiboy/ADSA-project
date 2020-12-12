@@ -1,4 +1,5 @@
-Room 2
+Communication
+[['Shield', 1], ['Storage', 2]]
 ['Corridor 4']
 [[]]
 ['room2-1', 'room2-2']

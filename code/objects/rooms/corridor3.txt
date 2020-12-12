@@ -1,6 +1,7 @@
 Corridor 3
+[]
 ['Weapons', 'Navigation', 'O2', 'Shield']
-[['Cafeteria', 'Corridor 3'], ['Corridor 3', 'Room 1']]
+[['Cafeteria', 'Corridor 3'], ['Corridor 3', 'Admin']]
 ['corridor3-1']
 []
 [[]]

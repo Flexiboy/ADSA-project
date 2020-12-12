@@ -1,4 +1,5 @@
 Medbay
+[['Cafeteria', 2], ['Upper E', 5]]
 ['Corridor 1']
 [['Medbay', 'Security'], ['Electrical', 'Medaby']
 ['medbay-1', 'medbay-2']

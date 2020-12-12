@@ -33,7 +33,7 @@ class Map:
 					form = []
 					for i in range(6, len(inp):
 						form.append(list(i))
-					r = Room(name, connected_rooms, connected_corr, vents, tasks, sabotage)
+					r = Room(name, form, connected_rooms, connected_corr, vents, tasks, sabotage)
 					self.rooms.append(r)
 		except(e):
 			pass

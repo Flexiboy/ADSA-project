@@ -1,4 +1,5 @@
 Security
+[['Reactor', 2], ['Upper E', 3], ['Lower E', 4]]
 ['Corridor 7']
 [’Security', 'Medbay'], ['Security', 'Electrical']
 ['security']

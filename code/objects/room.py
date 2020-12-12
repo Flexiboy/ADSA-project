@@ -8,7 +8,7 @@ from objects.sabotage import *
 
 class Room:
 	
-	def __init__(self, name, form, connected, vents, tasks, sabotage):
+	oef __init__(self, name, form, connected_rooms, connected_corr, vents, tasks, sabotage):
 		"""
 		Init of a room
 		"""
@@ -18,7 +18,8 @@ class Room:
 		# 0, this is void
 		# 1, this is a block without any specification
 		# -1, this is a door location
-		self.connected = connected # the rooms that are connected to this one
+		self.connected_rooms = connected # the rooms that are connected to this one
+		self.connected_corr = connected_corr
 		self.vents = vents
 		self.tasks = tasks
 		self.sabotage = sabotage
