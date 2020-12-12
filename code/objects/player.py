@@ -10,7 +10,7 @@ Class Player
 """
 
 class Player:
-	def __init__(self, _id, name):
+	def __init__(self, _id, name, location):
 		"""
 		Initialize the player
 		:param self: the player itself
@@ -24,6 +24,7 @@ class Player:
 		self.role = ""
 		self.Score_games = []
 		self.Score_turns = []
+		self.location = location
 
 	def __str__(self):
 		"""
@@ -44,10 +45,15 @@ class Player:
 			value = self._id
 		if(index == "score_games"):
 			value = self.Score_games
+		if(index == 'location'):
+			value = self.location
 		return value
+		
 	def __setitem__(self, index, value):
 		if(index == "role"):
 			self.role = value
+		if(index == 'location'):
+			self.location = value
 
 	"""
 	called during a game
