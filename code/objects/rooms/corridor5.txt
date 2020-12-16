@@ -1,7 +1,0 @@
-Corridor 5
-[]
-['Storage', 'Electrical', 'Lower E']
-[[]]
-[]
-[]
-[[]]

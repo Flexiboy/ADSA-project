@@ -1,7 +1,0 @@
-Corridor 1
-[]
-['Upper E', 'Medbay', 'Cafeteria']
-[[]]
-[]
-[]
-[[]]

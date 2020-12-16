@@ -1,7 +1,0 @@
-Corridor 7
-[]
-['Cafeteria', 'Admin', 'Storage']
-[[]]
-['corridor7-1']
-[]
-[[]]

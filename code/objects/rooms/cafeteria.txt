@@ -1,7 +1,0 @@
-Cafeteria
-[['Upper E', 7], ['Medbay', 2], ['Weapons', 1], ['Storage', 2]]
-['Corridor 1', 'Corridor 2', 'Corridor 7']
-[['Cafeteria', 'Corridor 3'], ['Cafeteria', 'Admin']]
-['cafeteria-1', 'cafeteria-2', 'cafeteria-3']
-[]
-[[], []]

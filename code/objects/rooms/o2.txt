@@ -1,7 +1,0 @@
-O2
-[['Weapons', 2], ['Navigations', 3], ['Shield', 7]]
-['Corridor 3']
-[[]]
-['o2-1', 'o2-2']
-['sabotage-o2']
-[[]]

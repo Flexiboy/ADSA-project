@@ -1,7 +1,0 @@
-Corridor 4
-[]
-['Shield', 'Communication', 'Storage']
-[[]]
-[]
-[]
-[[]]

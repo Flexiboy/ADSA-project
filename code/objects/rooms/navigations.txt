@@ -1,7 +1,0 @@
-Navigations
-[['O2', 3], ['Weapons', 5], ['Shield', 7]]
-['Corridor 3']
-[['Navigations', 'Weapons'], ['Navigation', 'Shield']]
-['navigation-1', 'navigation-2', 'navigation-3', 'navigation-4']
-[]
-[[]]

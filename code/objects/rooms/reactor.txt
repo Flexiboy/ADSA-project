@@ -1,7 +1,0 @@
-Reactor
-[['Security', 2], ['Upper E', 3], ['Lower E', 3]]
-['Corridor 6']
-[['Reactor', 'Lower E'], ['Reactor', 'Upper E']]
-['reactor-1', 'reactor-2', 'reactor-3']
-['sabotage-reactor-1', 'sabotage-reactor-2']
-[[]]

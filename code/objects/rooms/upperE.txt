@@ -1,7 +1,0 @@
-Upper E
-[['Reactor', 3], ['Security', 3], ['Lower E', 6], ['Medbay', 5], ['Cafeteria', 7]
-['Corridor 1', 'Corridor 6']
-[['Upper E', 'Reactor']]
-['uppere-1', 'uppere-2', 'uppere-3']
-[]
-[[]]

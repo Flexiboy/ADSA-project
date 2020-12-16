@@ -1,7 +1,0 @@
-Corridor 2
-[]
-['Cafeteria', 'Weapons']
-[[]]
-[]
-[]
-[[]]
