@@ -56,11 +56,10 @@ Class Map
 
 class Map:
 
-	def __init__(self, paths):
+	def __init__(self):
 		"""
 		Initialize the map
 		:param self: the map itself
-		:param path: the path to the files containing init infos
 		"""
 		
 		self.map = [
@@ -77,21 +76,6 @@ class Map:
 			('upper e', 'medbay'), ('upper e', 'cafeteria'), ('security', 'reactor'), ('security', 'upper e'),
 			('security', 'lower e'), ('medbay', 'cafeteria'), ('medbay', 'upper e'), ('admin', 'cafeteria'),
 			('admin', 'storage')]
-		self.map = {
-			'cafeteria': {'weapons', 'upper e', 'medbay', 'admin', 'storage'},
-			'weapons': {'cafeteria', 'o2', 'navigations', 'shield'},
-			'navigations': {'o2', 'weapons', 'shield'},
-			'o2': {'weapons', 'navigations', 'shield'},
-			'shield': {'weapons', 'o2', 'navigations', 'communication', 'storage'},
-			'communication': {'shield', 'storage'},
-			'storage': {'communication', 'shield', 'admin', 'cafeteria', 'electrical', 'lower e'},
-			'electrical': {'storage', 'lower e'},
-			'lower e': {'storage', 'electrical', 'security', 'reactor', 'upper e'},
-			'reactor': {'security', 'upper e', 'lower e'},
-			'upper e': {'reactor', 'security', 'lower e', 'medbay', 'cafeteria'},
-			'security': {'reactor', 'upper e', 'lower e'},
-			'medbay' : {'cafeteria', 'upper e'},
-			'admin': {'cafeteria', 'storage'}}
 
 		self.map_crewmate = {
 			'cafeteria': {'weapons': 1, 'upper e': 7, 'medbay': 2, 'admin': 2, 'storage': 2},
@@ -126,6 +110,12 @@ class Map:
 			'admin': {'cafeteria': 0, 'storage': 1, 'o2': 3, 'navigations': 3, 'shield': 3, 'weapons': 4}}
 
 	def bellman_ford(self, graph, source):
+		"""
+		Bellman-Ford algorithm
+		:param self: the map itself
+		:param graph:
+		:param source:
+		"""
 		# Step 1: Prepare the distance and predecessor for each node
 		distance, predecessor = dict(), dict()
 		for node in graph:
@@ -147,7 +137,12 @@ class Map:
  
 		return distance, predecessor        
 
-	def Floyd_Warshall(self, graph):   
+	def Floyd_Warshall(self, graph):
+		"""
+		Floyd Warshall Algorithm
+		:param self: the map itself
+		:param graph:
+		"""
 		final = list()
 		for current_node in graph:       
 			final.append(f"'{current_node}': {self.bellman_ford(graph, current_node)[0]}")
@@ -162,8 +157,25 @@ class Map:
 		"""
 		MST = []
 
+		ds = DisjointSet()
+		ds.makeSet(N)
 
-#m = Map([])
+		index = 0
+
+		while len(MST) != N - 1:
+			(src, dest) = edges[index]
+			index += 1
+			x = ds.Find(src)
+			y = ds.Find(dest)
+
+			if x != y:
+				MST.append((src, dest))
+				ds.Union(x, y)
+
+		return MST
+
+
+#m = Map()
 #graph = m.Floyd_Warshall(m.map_crewmate)
 #for elt in graph:
 #	print(elt)
