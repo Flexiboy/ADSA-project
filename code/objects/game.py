@@ -328,7 +328,7 @@ class Game:
 
     #endregion
 
-    def Couple_probable_impostors(self,list_player):
+    def Couple_probable_impostors(self):
         """
         Method to find probable impostors in a graph
         return:list of impostor's couple
@@ -344,7 +344,7 @@ class Game:
                     '6': {'1': 100, '8': 100, '9': 100},
                     '7': {'2': 100, '5': 100, '9': 100},
                     '8': {'3': 100, '5': 100, '6': 100},
-                    '9': {'4': 100, '6': 100, '7': 100},}   
+                    '9': {'4': 100, '6': 100, '7': 100}}   
                     
         list_probable_impostors = []
 
@@ -378,6 +378,43 @@ class Game:
                 #We create couple with the first probable impostor (1 or 4 or 5) and each player left in the player list    
                 for i in temp_list_player:
                     list_probable_impostors.append([player,i])
+        
+        return list_probable_impostors
+
+    def Couple_probable_impostors_Bellman(self):
+        """
+        Method to find probable impostors in a graph with bellman_ford
+        return:list of impostor's couple
+        """
+
+        #the graph
+        graph = {'0': {'1': 1, '4': 1, '5': 1},
+                    '1': {'0': 1 , '2': 1, '6': 1},
+                    '2': {'1': 1, '3': 1, '7': 1},
+                    '3': {'2': 1, '4': 1, '8': 1},
+                    '4': {'0': 1, '3': 1, '9': 1},
+                    '5': {'0': 1, '7': 1, '8': 1},
+                    '6': {'1': 1, '8': 1, '9': 1},
+                    '7': {'2': 1, '5': 1, '9': 1},
+                    '8': {'3': 1, '5': 1, '6': 1},
+                    '9': {'4': 1, '6': 1, '7': 1}}   
+                    
+        list_probable_impostors = []
+        distance_1 = self.bellman_ford(graph,'1')   
+        distance_4 = self.bellman_ford(graph,'4')  
+        distance_5 = self.bellman_ford(graph,'5')
+        for player in distance_1:
+            if(player != "5" and player != "4"):
+                if(distance_1[player]>1):
+                    list_probable_impostors.append(["1",player])
+        for player in distance_4:
+            if(player != "1" and player != "5"):
+                if(distance_4[player]>1):
+                    list_probable_impostors.append(["4",player])
+        for player in distance_5:
+            if(player != "1" and player != "4"):
+                if(distance_5[player]>1):
+                    list_probable_impostors.append(["5",player])
         
         return list_probable_impostors
 
@@ -421,6 +458,21 @@ class Game:
         add it to the Score List of Games (tournement).
         """
         for player in liste:
-            player.Score_game()
-    
+            player.Score_game()        
 
+    def bellman_ford(self, graph, source):
+        # Step 1: Prepare the distance and predecessor for each node
+        distance, predecessor = dict(), dict()
+        for node in graph:
+            distance[node], predecessor[node] = float('inf'), None
+        distance[source] = 0
+
+        # Step 2: Relax the edges
+        for _ in range(len(graph) - 1):
+            for node in graph:
+                    for neighbour in graph[node]:
+                    # If the distance between the node and the neighbour is lower than the current, store it
+                        if distance[neighbour] > distance[node] + graph[node][neighbour]:
+                                distance[neighbour], predecessor[neighbour] = distance[node] + graph[node][neighbour], node
+
+        return distance   
