@@ -20,26 +20,23 @@ class Map:
 		:param self: the map itself
 		:param path: the path to the files containing init infos
 		"""
-		"""
-		self.rooms = []
-		try:
-			for path in paths:
-				with open(path) as inp:
-					name = str(inp[0])
-					connected_rooms = list(inp[1])
-					connected_corr = list(inp[2])
-					vents = list(inp[3])
-					tasks = list(inp[4])
-					sabotage = list(inp[5])
-					form = []
-					for i in range(6, len(inp):
-						form.append(list(i))
-					r = Room(name, form, connected_rooms, connected_corr, vents, tasks, sabotage)
-					self.rooms.append(r)
-		except(e):
-			pass
-		"""
 		
+		self.map = {
+			'cafeteria': {'weapons', 'upper e', 'medbay', 'admin', 'storage'},
+			'weapons': {'cafeteria', 'o2', 'navigations', 'shield'},
+			'navigations': {'o2', 'weapons', 'shield'},
+			'o2': {'weapons', 'navigations', 'shield'},
+			'shield': {'weapons', 'o2', 'navigations', 'communication', 'storage'},
+			'communication': {'shield', 'storage'},
+			'storage': {'communication', 'shield', 'admin', 'cafeteria', 'electrical', 'lower e'},
+			'electrical': {'storage', 'lower e'},
+			'lower e': {'storage', 'electrical', 'security', 'reactor', 'upper e'},
+			'reactor': {'security', 'upper e', 'lower e'},
+			'upper e': {'reactor', 'security', 'lower e', 'medbay', 'cafeteria'},
+			'security': {'reactor', 'upper e', 'lower e'},
+			'medbay' : {'cafeteria', 'upper e'},
+			'admin': {'cafeteria', 'storage'}}
+
 		self.map_crewmate = {
 			'cafeteria': {'weapons': 1, 'upper e': 7, 'medbay': 2, 'admin': 2, 'storage': 2},
 			'weapons': {'cafeteria': 1, 'o2': 2, 'navigations': 5, 'shield': 7},
@@ -94,16 +91,13 @@ class Map:
  
 		return distance, predecessor        
 
-
-############ bellman_ford ###################
-
 	def Floyd_Warshall(self, graph):   
 		final = list()
 		for current_node in graph:       
 			final.append(f"'{current_node}': {self.bellman_ford(graph, current_node)[0]}")
 		return final
 
-m = Map([])
-graph = m.Floyd_Warshall(m.map_crewmate)
-for elt in graph:
-	print(elt)
+#m = Map([])
+#graph = m.Floyd_Warshall(m.map_crewmate)
+#for elt in graph:
+#	print(elt)
