@@ -80,17 +80,17 @@ class Map:
 		distance[source] = 0
 
 		# Step 2: Relax the edges
-		for _ in range(len(graph) - 1):
+		for i in range(len(graph) - 1):
 			for node in graph:
 				for neighbour in graph[node]:
 					# If the distance between the node and the neighbour is lower than the current, store it
 					if distance[neighbour] > distance[node] + graph[node][neighbour]:
 						distance[neighbour], predecessor[neighbour] = distance[node] + graph[node][neighbour], node
 
-				# Step 3: Check for negative weight cycles
-				for node in graph:
-					for neighbour in graph[node]:
-						assert distance[neighbour] <= distance[node] + graph[node][neighbour], "Negative weight cycle."
+		# Step 3: Check for negative weight cycles
+		for node in graph:
+			for neighbour in graph[node]:
+				assert distance[neighbour] <= distance[node] + graph[node][neighbour], "Negative weight cycle."
  
 		return distance, predecessor        
 
@@ -105,3 +105,4 @@ class Map:
 
 m = Map([])
 m.Floyd_Warshall(m.map_crewmate)
+print(m)
