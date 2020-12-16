@@ -10,7 +10,7 @@ Class Player
 """
 
 class Player:
-	def __init__(self, _id, name, location):
+	def __init__(self, _id, name):
 		"""
 		Initialize the player
 		:param self: the player itself
@@ -24,7 +24,6 @@ class Player:
 		self.role = ""
 		self.Score_games = []
 		self.Score_turns = []
-		self.location = location
 
 	def __str__(self):
 		"""
