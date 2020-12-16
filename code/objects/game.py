@@ -7,7 +7,6 @@
 Class game
 """
 import random
-from player import *
 
 class Game:
 
@@ -56,7 +55,7 @@ class Game:
         return string
     
 
-
+    #region PLAY THE GAME
     def Start(self, task_done = 0):
         """
         Starting game function
@@ -327,6 +326,83 @@ class Game:
         print("who saw who? I can help you sherlock : \n", graph)
         return list_Probable_impostors
 
+    #endregion
+
+    def Couple_probable_impostors(self,list_player):
+        """
+        Method to find probable impostors in a graph
+        return:list of impostor's couple
+        """
+
+        #the graph
+        graph = {'0': {'1': 0, '4': 0, '5': 0},
+                    '1': {'0': 110 , '2': 100, '6': 100},
+                    '2': {'1': 100, '3': 100, '7': 100},
+                    '3': {'2': 100, '4': 100, '8': 100},
+                    '4': {'0': 0, '3': 100, '9': 100},
+                    '5': {'0': 0, '7': 100, '8': 100},
+                    '6': {'1': 100, '8': 100, '9': 100},
+                    '7': {'2': 100, '5': 100, '9': 100},
+                    '8': {'3': 100, '5': 100, '6': 100},
+                    '9': {'4': 100, '6': 100, '7': 100},}   
+                    
+        list_probable_impostors = []
+
+        #for each player in the graph, we will remove all player not probable impostor from a player list
+        for player in graph:
+
+            #a temp list of impostor
+            temp_list_player = ['0','1','2','3','4','5','6','7','8','9']
+
+            #we know that player 1, 4 and 5 are probable impostors. So will check for each a probable partner 
+            if (player == '1'or player == '4' or player == '5'):
+
+                #remove the other probable impostor
+                if (player == '1'):
+                    temp_list_player.remove('4')
+                    temp_list_player.remove('5')
+                if(player == '4'):
+                    temp_list_player.remove('1')
+                    temp_list_player.remove('5')
+                if(player == '5'):
+                    temp_list_player.remove('4')
+                    temp_list_player.remove('1')
+
+                #We also remove the probable impostor     
+                temp_list_player.remove(player)
+
+                #We remove player seen by the probable impostor
+                for player_seen in graph[player]:
+                    temp_list_player.remove(player_seen)
+
+                #We create couple with the first probable impostor (1 or 4 or 5) and each player left in the player list    
+                for i in temp_list_player:
+                    list_probable_impostors.append([player,i])
+        
+        return list_probable_impostors
+
+    def Color_player(self,graph):
+        """
+        Color a graph of player who have seen each other
+        :return:player with is color
+        """
+
+        # Order nodes in descending degree
+        nodes = sorted(list(graph.keys()), key=lambda x: len(graph[x]), reverse=True)
+        color_map = {}
+
+        for node in nodes:
+            available_colors = [True] * len(nodes)
+            for neighbor in graph[node]:
+                if neighbor in color_map:
+                    color = color_map[neighbor]
+                    available_colors[color] = False
+                for color, available in enumerate(available_colors):
+                    if available:
+                        color_map[node] = color
+                        break
+        return color_map
+
     def Str_list_name(self, liste):    
         """
         Method to print the content of a player list
@@ -346,105 +422,5 @@ class Game:
         """
         for player in liste:
             player.Score_game()
-  
-    def bellman_ford(self,graph, source):
-        # Step 1: Prepare the distance and predecessor for each node
-        distance, predecessor = dict(), dict()
-        for node in graph:
-            distance[node], predecessor[node] = float('inf'), None
-        distance[source] = 0
-
-        # Step 2: Relax the edges
-        for _ in range(len(graph) - 1):
-            for node in graph:
-                for neighbour in graph[node]:
-                    # If the distance between the node and the neighbour is lower than the current, store it
-                    if distance[neighbour] > distance[node] + graph[node][neighbour]:
-                        distance[neighbour], predecessor[neighbour] = distance[node] + graph[node][neighbour], node
-
-        # Step 3: Check for negative weight cycles
-        for node in graph:
-            for neighbour in graph[node]:
-                assert distance[neighbour] <= distance[node] + graph[node][neighbour], "Negative weight cycle."
     
-        return distance, predecessor 
-
-    def Probable_impostors_Project(self,list_player):
-        """
-        Method to find probable impostor in a graph
-        return:list of impostors
-        """
-
-
-        impostors = []
-
-
-        """
-        TEST AVEC LA LISTE DES JOUEURS
-
-        if(len(list_player)!=10):
-            return 'the lenght of player list must be 10'
-        inf = 99999999999999
-        graph = {list_player[0]._id: {list_player[1]._id: 0, list_player[4]._id: 0, list_player[5]._id: 0},
-                    list_player[1]._id: {list_player[0]._id: 0 , list_player[2]._id: 1, list_player[6]._id: 1},
-                    list_player[2]._id: {list_player[1]._id: 1, list_player[3]._id: 1, list_player[7]._id: 1},
-                    list_player[3]._id: {list_player[2]._id: 1, list_player[4]._id: 1, list_player[8]._id: 1},
-                    list_player[4]._id: {list_player[0]._id: 0, list_player[3]._id: 1, list_player[9]._id: 1},
-                    list_player[5]._id: {list_player[0]._id: 0, list_player[7]._id: 1, list_player[8]._id: 1},
-                    list_player[6]._id: {list_player[1]._id: 1, list_player[8]._id: 1, list_player[9]._id: 1},
-                    list_player[7]._id: {list_player[2]._id: 1, list_player[5]._id: 1, list_player[9]._id: 1},
-                    list_player[8]._id: {list_player[3]._id: 1, list_player[5]._id: 1, list_player[6]._id: 1},
-                    list_player[9]._id: {list_player[4]._id: 1, list_player[6]._id: 1, list_player[7]._id: 1},
-                    }
-        """
-
-        """
-        TEST EN DUR
-        """
-        graph = {'0': {'1': 0, '4': 0, '5': 0},
-                    '1': {'0': 0 , '2': 100, '6': 100},
-                    '2': {'1': 100, '3': 100, '7': 100},
-                    '3': {'2': 100, '4': 100, '8': 100},
-                    '4': {'0': 0, '3': 100, '9': 100},
-                    '5': {'0': 0, '7': 100, '8': 100},
-                    '6': {'1': 100, '8': 100, '9': 100},
-                    '7': {'2': 100, '5': 100, '9': 100},
-                    '8': {'3': 100, '5': 100, '6': 100},
-                    '9': {'2': 100, '5': 100, '9': 100},
-                    
-                    }       
-        distance_Bellman, predecessor_Bellman = self.bellman_ford(graph, source='0') #we call bellmain_ford
-        print(distance_Bellman) # we take the dictionnary distance
-
-
-        for player in distance_Bellman:
-            if(distance_Bellman[player]==0):
-                impostors.append(player)
-        impostors.pop(0) #  pop the first player because it's the source player (he saw himself)
-        return impostors
-
-
-    
-p1 = Player(0,'valentin')
-p2 = Player(1,'brunelle')
-p3 = Player(2,'marc')
-p4 = Player(3,'jean')
-p5 = Player(4,'steph')
-p6 = Player(5,'marie')
-p7 = Player(6,'franck')
-p8 = Player(7,'antoine')
-p9 = Player(8,'lea')
-p10 = Player(9,'paul')
-
-Game_players = [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10]
-g = Game(1,Game_players)
-
-print(g.Probable_impostors_Project(Game_players))
-
-
-g.Start()
-g.Update_score_game(Game_players)
-print("")
-
-
 
