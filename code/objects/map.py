@@ -3,8 +3,50 @@
 # Authors: Julien MARTIN-PRIN and Valentin FERNANDES
 # IOS 2 Promo 2022
 
-#from objects.room import *
-#from objects.player import *
+"""
+
+Class Disjoint Set
+
+"""
+
+class DisjointSet:
+	
+	def __init__(self):
+		"""
+		Initialize the disjoint set
+		:param self: the disjoint set itself
+		"""
+		self.parent = {}
+	
+	def makeSet(self, N):
+		"""
+		Perform makeset operation
+		:param self: the disjoint set itself
+		:param N: number of disjoint set
+		"""
+		for i in range(N + 1):
+			self.parent[i] = i
+
+	def Find(self, k):
+		"""
+		Find the root of the set in which element k belongs
+		:param self: the disjoint set itself
+		:param k: 
+		"""
+		if self.parent[k] == k:
+			return k
+		return self.Find(self.parent[k])
+
+	def Union(self, a, b):
+		"""
+		Performs the union of two subsets
+		:param self: the disjoint set itself
+		:param a: subset a
+		:param b: subset b
+		"""
+		x = self.Find(a)
+		y = self.Find(b)
+		self.parent[x] = y
 
 """
 
@@ -21,6 +63,20 @@ class Map:
 		:param path: the path to the files containing init infos
 		"""
 		
+		self.map = [
+			('cafeteria', 'weapons'), ('cafeteria', 'upper e'), ('cafeteria', 'medbay'), ('cafeteria', 'admin'),
+			('cafeteria', 'storage'), ('weapons', 'cafeteria'), ('weapons', 'o2'), ('weapons', 'navigations'),
+			('weapons', 'shield'), ('navigations', 'o2'), ('navigations', 'weapons'), ('navigations', 'shield'),
+			('o2', 'weapons'), ('o2', 'navigations'), ('o2', 'shield'), ('shield', 'weapons'), ('shield', 'o2'),
+			('shield', 'navigations'), ('shield', 'communication'), ('shield', 'storage'), ('communication', 'shield'),
+			('communication', 'storage'), ('storage', 'communication'), ('storage', 'shield'), ('storage', 'admin'),
+			('storage', 'cafeteria'), ('storage', 'electrical'), ('storage', 'lower e'), ('electrical', 'storage'),
+			('electrical', 'lower e'), ('lower e', 'storage'), ('lower e', 'electrical'), ('lower e', 'security'),
+			('lower e', 'reactor'), ('lower e', 'upper e'), ('reactor', 'security'), ('reactor', 'upper e'),
+			('reactor', 'lower e'), ('upper e', 'reactor'), ('upper e', 'security'), ('upper e', 'lower e'),
+			('upper e', 'medbay'), ('upper e', 'cafeteria'), ('security', 'reactor'), ('security', 'upper e'),
+			('security', 'lower e'), ('medbay', 'cafeteria'), ('medbay', 'upper e'), ('admin', 'cafeteria'),
+			('admin', 'storage')]
 		self.map = {
 			'cafeteria': {'weapons', 'upper e', 'medbay', 'admin', 'storage'},
 			'weapons': {'cafeteria', 'o2', 'navigations', 'shield'},
@@ -96,6 +152,16 @@ class Map:
 		for current_node in graph:       
 			final.append(f"'{current_node}': {self.bellman_ford(graph, current_node)[0]}")
 		return final
+
+	def Kruskal(self, edges, N):
+		"""
+		Kruskal algorithm
+		:param self: the map itself
+		:param edges:
+		:param N:
+		"""
+		MST = []
+
 
 #m = Map([])
 #graph = m.Floyd_Warshall(m.map_crewmate)
