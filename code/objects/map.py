@@ -3,8 +3,8 @@
 # Authors: Julien MARTIN-PRIN and Valentin FERNANDES
 # IOS 2 Promo 2022
 
-from objects.room import *
-from objects.player import *
+#from objects.room import *
+#from objects.player import *
 
 """
 
@@ -19,6 +19,7 @@ class Map:
 		Initialize the map
 		:param self: the map itself
 		:param path: the path to the files containing init infos
+		"""
 		"""
 		self.rooms = []
 		try:
@@ -37,11 +38,12 @@ class Map:
 					self.rooms.append(r)
 		except(e):
 			pass
+		"""
 		
         	self.map_crewmate = {
             		'cafeteria': {'weapons': 1, 'upper e': 7, 'medbay': 2, 'admin': 2, 'storage': 2},
                 	'weapons': {'cafeteria': 1, 'o2': 2, 'navigation': 5, 'shield': 7},
-                	'navigation': {'o2': 3, 'weapons': 5, 'shield': 7},
+                	'navigation': {'o2': 3, 'weapons': 5, 'shield': 6},
                 	'o2': {'weapon': 2, 'navigation': 3, 'shield': 7},
                 	'shield': {'weapons': 7, 'o2': 7, 'navigation': 7, 'communication': 1, 'storage': 3},
                 	'communication': {'shield': 1 , 'storage': 2},
@@ -51,7 +53,8 @@ class Map:
                 	'reactor': {'security': 2, 'upper e': 3, 'lower e': 3},
                 	'upper e': {'reactor': 3, 'security': 3, 'lower e': 6, 'medbay': 5, 'cafeteria': 7},
                 	'security': {'reactor': 3, 'upper e': 4, 'lower e': 4},
-                	'medbay' : {'cafeteria': 2, 'upper e': 5}}
+                	'medbay' : {'cafeteria': 2, 'upper e': 5},
+			'admin': {}}
 
 		self.map_impostor = {
 			'cafeteria': {'weapons': 1 , 'upper e' : 7 , 'medbay' : 2 , 'admin' : 2 , 'storage' : 2 , 'admin' : 0 },
