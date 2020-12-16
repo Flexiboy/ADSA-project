@@ -44,7 +44,7 @@ class Map:
 			'cafeteria': {'weapons': 1, 'upper e': 7, 'medbay': 2, 'admin': 2, 'storage': 2},
 			'weapons': {'cafeteria': 1, 'o2': 2, 'navigations': 5, 'shield': 7},
 			'navigations': {'o2': 3, 'weapons': 5, 'shield': 6},
-			'o2': {'weapon': 2, 'navigations': 3, 'shield': 7},
+			'o2': {'weapons': 2, 'navigations': 3, 'shield': 7},
 			'shield': {'weapons': 7, 'o2': 7, 'navigations': 6, 'communication': 1, 'storage': 3},
 			'communication': {'shield': 1, 'storage': 2},
 			'storage': {'communication': 2, 'shield': 3, 'admin': 1, 'cafeteria': 2, 'electrical': 4, 'lower e': 8},
@@ -60,7 +60,7 @@ class Map:
 			'cafeteria': {'weapons': 1, 'upper e': 7, 'medbay': 2, 'admin': 0, 'storage': 2, 'o2': 3, 'navigations': 3, 'shield': 3},
 			'weapons': {'cafeteria': 1, 'o2': 2, 'navigations': 0, 'shield': 7},
 			'navigations': {'o2': 3, 'weapons': 5, 'shield': 0},
-			'o2': {'weapon': 2, 'navigations': 3, 'shield': 7},
+			'o2': {'weapons': 2, 'navigations': 3, 'shield': 7},
 			'shield': {'weapons': 7, 'o2': 7, 'navigations': 0, 'communication': 1, 'storage': 3},
 			'communication': {'shield': 1, 'storage': 2},
 			'storage': {'communication': 2, 'shield': 3, 'admin': 1, 'cafeteria': 2, 'electrical': 4, 'lower e': 8},
@@ -99,10 +99,11 @@ class Map:
 
 	def Floyd_Warshall(self, graph):   
 		final = list()
-		for curent_node in graph:       
-			final.append(self.bellman_ford(graph, curent_node)[0])
+		for current_node in graph:       
+			final.append(f"'{current_node}': {self.bellman_ford(graph, current_node)[0]}")
 		return final
 
 m = Map([])
-m.Floyd_Warshall(m.map_crewmate)
-print(m)
+graph = m.Floyd_Warshall(m.map_crewmate)
+for elt in graph:
+	print(elt)
