@@ -17,7 +17,14 @@ def program(choice):
 		step1 = Tournament(100)
 	elif choice == 2:
 		#step 2
-		print('step 2')
+		print('\nStep 2')
+		player_list = []
+		for i in range(10):
+			new_player = Player(i, f'player{i + 1}')
+			player_list.append(new_player)
+			del new_player
+		step2 = Game(player_list)
+		print(step2.Couple_probable_impostors_Bellman())
 	elif choice == 3:
 		#step 3
 		print('\nStep 3')
