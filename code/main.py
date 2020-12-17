@@ -32,10 +32,12 @@ def program(choice):
 			print(elt)
 	elif choice == 4:
 		#step 4
-		print('step 4')
+		print('\nStep 4\n')
+		step4 = Map()
+		step4.print_hampaths()
 	else:
 		#exit
-		print('exit')
+		print('\nExit')
 		return False
 	return True
 

@@ -230,4 +230,4 @@ class Map:
 				self.Convert_num_to_string(hamiltonian)
 				print("Path : ")
 				print(hamiltonian)
-				print("\n")
+				print('')
