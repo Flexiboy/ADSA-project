@@ -41,7 +41,7 @@ class Tournament:
 		player_name = ""
 		for i in range(numberOfPlayers):
 			#player_name = input("Enter player name > ")
-			player_name = f'player{i}'
+			player_name = f'player{i + 1}'
 			new_player = Player(i, player_name)
 			player_list.append(new_player)
 			del new_player
