@@ -3,7 +3,7 @@
 # Authors: Julien MARTIN-PRIN & Valentin FERNANDES
 
 from objects.tournament import *
-#from objects.map import *
+from objects.map import *
 
 def program(choice):
 	"""
@@ -20,7 +20,16 @@ def program(choice):
 		print('step 2')
 	elif choice == 3:
 		#step 3
-		print('step 3')
+		print('\nStep 3')
+		step3 = Map()
+		graph1 = step3.Floyd_Warshall(step3.map_crewmate)
+		print('Map Crewmate')
+		for elt in graph1:
+			print(elt)
+		graph2 = step3.Floyd_Warshall(step3.map_impostors)
+		print('Map Impostors')
+		for elt in graph2:
+			print(elt)
 	elif choice == 4:
 		#step 4
 		print('step 4')
