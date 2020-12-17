@@ -64,7 +64,7 @@ class Tournament:
 			for j in range(10): #Selecting the players of the game
 				player_list.append(self.alive[i * 10 + j])
 			new_game = Game(self.player_list)
-			new_game.Start()
+			new_game.RndScores()
 			game_list.append(new_game)
 			del new_game
 			player_list = []

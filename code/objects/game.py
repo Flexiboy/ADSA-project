@@ -489,4 +489,8 @@ class Game:
                         if distance[neighbour] > distance[node] + graph[node][neighbour]:
                                 distance[neighbour], predecessor[neighbour] = distance[node] + graph[node][neighbour], node
 
-        return distance   
+        return distance
+
+    def RndScores(self):
+    	for player in self.list_player:
+	    player.score = random.randrange(0, 12, 1)
