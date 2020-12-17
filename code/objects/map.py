@@ -17,7 +17,9 @@ class DisjointSet:
 		:param self: the disjoint set itself
 		"""
 		self.parent = {}
-	
+
+
+
 	def makeSet(self, N):
 		"""
 		Perform makeset operation
@@ -26,6 +28,8 @@ class DisjointSet:
 		"""
 		for i in range(N + 1):
 			self.parent[i] = i
+
+
 
 	def Find(self, k):
 		"""
@@ -37,6 +41,8 @@ class DisjointSet:
 			return k
 		return self.Find(self.parent[k])
 
+
+
 	def Union(self, a, b):
 		"""
 		Performs the union of two subsets
@@ -47,6 +53,10 @@ class DisjointSet:
 		x = self.Find(a)
 		y = self.Find(b)
 		self.parent[x] = y
+
+
+
+
 
 """
 
@@ -113,6 +123,13 @@ class Map:
 
 
 	def bellman_ford(self, graph, source):
+		"""
+		Bellman Ford algorithm
+		:param self: the map itself
+		:param graph: the graph
+		:param source: 
+		:return: the distance
+		"""
 		# Step 1: Prepare the distance and predecessor for each node
 		distance, predecessor = dict(), dict()
 		for node in graph:
@@ -129,104 +146,104 @@ class Map:
 		
 		return distance  
 
+
+
 	def Floyd_Warshall(self, graph):
 		"""
 		Floyd Warshall Algorithm
 		:param self: the map itself
-		:param graph:
+		:param graph: the graph
 		"""
 		final = list()
 		for current_node in graph:       
 			final.append(f"'{current_node}': {self.bellman_ford(graph, current_node)}")
 		return final
 	
-	def hampath(self, graph, start,bound, path=None):
+
+
+	def hampath(self, graph, start, bound, path=None):
 		"""
 		recusive Hamiltonian path function
-		:return:int path list 
+		:param self: the map itself
+		:param graph: the graph
+		:param start: 
+		:param bound:
+		:param path:
+		:return: int path list 
 		"""
 		
 		if path is None:
 			path = []
 
-		#if the path is equal to number of point, we pass throught all point and return the path
+		# If the path is equal to number of point, we pass throught all point and return the path
 		if len(path) == bound:
 			return path
 
-		#add the start
+		# Add the start
 		if not path:
 			path = path + [start]
 			
-		#check candidate
+		# Check candidate
 		for candidate in graph[start]:
-
-			#if the canditate is not already in the path, we call de function with the path + the new candidate
+			# If the canditate is not already in the path, we call de function with the path + the new candidate
 			if candidate not in path:
-				new_path = self.hampath(graph, candidate,bound, path + [candidate])
+				new_path = self.hampath(graph, candidate, bound, path + [candidate])
 				if new_path:
 					return new_path
 
-	def Convert_num_to_string(self,liste):
+
+
+	def Convert_num_to_string(self, list_):
 		"""
 		Function to convert all int to string, it's more fancy and understanble
-		:return:string list
+		:param self: the map itself
+		:param list_: the list
+		:return: string list
 		"""
-		#cafeteria = 0
-		#weapon = 1
-		#medbay = 2
-		#upper e =3
-		#admin = 4
-		#storage = 5
-		#o2=6
-		#navigation = 7
-		#shiel = 8
-		#communication = 9
-		#electrical =10
-		#lower e=11
-		#security =12
-		#reactor =13
-		for elem in liste:
+		for elem in list_:
 			if(elem == 0):
-				liste[liste.index(elem)] = "cafeteria"
+				list_[list_.index(elem)] = "cafeteria"
 			if(elem == 1):
-				liste[liste.index(elem)] ="weapon"
+				list_[list_.index(elem)] = "weapon"
 			if(elem == 2):
-				liste[liste.index(elem)] ="medbay"
+				list_[list_.index(elem)] = "medbay"
 			if(elem == 3):
-				liste[liste.index(elem)] ="upper e" 
+				list_[list_.index(elem)] = "upper e" 
 			if(elem == 4):
-				liste[liste.index(elem)] ="admin" 
+				list_[list_.index(elem)] = "admin" 
 			if(elem == 5):
-				liste[liste.index(elem)] ="storage" 
+				list_[list_.index(elem)] = "storage" 
 			if(elem == 6):
-				liste[liste.index(elem)] ="o2"
+				list_[list_.index(elem)] = "o2"
 			if(elem == 7):
-				liste[liste.index(elem)] ="navigation" 
+				list_[list_.index(elem)] = "navigation" 
 			if(elem == 8):
-				liste[liste.index(elem)] ="shiel" 
+				list_[list_.index(elem)] = "shield" 
 			if(elem == 9):
-				liste[liste.index(elem)] ="communication"
+				list_[list_.index(elem)] = "communication"
 			if(elem == 10):
-				liste[liste.index(elem)] ="electrical"
+				list_[list_.index(elem)] = "electrical"
 			if(elem == 11):
-				liste[liste.index(elem)] ="lower e"
+				list_[list_.index(elem)] = "lower e"
 			if(elem == 12):
-				liste[liste.index(elem)] ="security" 
+				list_[list_.index(elem)] = "security" 
 			if(elem == 13):
-				liste[liste.index(elem)] ="reactor"
+				list_[list_.index(elem)] = "reactor"
+
+
 
 	def print_hampaths(self):
 		"""
 		function to test a hamiltonian path for each point in a graph (with a different start)
+		:param self: the map itself
 		"""
 		for start in range(1, 14):
-			#we test the hamiltonian path for the point
+			# We test the hamiltonian path for the point
 			hamiltonian = self.hampath(self.map_int, start,14)
 
-			#if the algo finds a hamiltonian path
+			# If the algorithm finds a hamiltonian path
 			if hamiltonian:
-
-			#print the path with string
+				# prints the path with string
 				self.Convert_num_to_string(hamiltonian)
 				print("Path : ")
 				print(hamiltonian)

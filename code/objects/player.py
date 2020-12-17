@@ -22,8 +22,8 @@ class Player:
 		self.rank = 0
 		self.score = 0
 		self.role = ""
-		self.Score_games = []
-		self.Score_turns = []
+
+
 
 	def __str__(self):
 		"""

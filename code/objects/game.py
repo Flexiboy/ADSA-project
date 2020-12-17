@@ -51,6 +51,7 @@ class Game:
 	def __str__(self):
 		"""
 		Stringify the game object
+		:param self: the game itself
 		:return: increased verbosity of object game
 		"""
 		return "The game have :\n 2 impostors : " 
@@ -63,7 +64,8 @@ class Game:
 	def Couple_probable_impostors_Bellman(self):
 		"""
 		Method to find probable impostors in a graph with bellman_ford
-		return:list of impostor's couple
+		:param self: the game itself
+		return: list of impostor's couple
 		"""
 		graph = {'0': {'1': 1, '4': 1, '5': 1},
 			 '1': {'0': 1, '2': 1, '6': 1},
@@ -78,28 +80,28 @@ class Game:
                     
 		probable_impostors = []
 		# Store all distance from the three first probable impostor
-		distance_1 = self.bellman_ford(graph,'1')   
-		distance_4 = self.bellman_ford(graph,'4')  
-		distance_5 = self.bellman_ford(graph,'5')
+		distance_1 = self.bellman_ford(graph, '1')   
+		distance_4 = self.bellman_ford(graph, '4')  
+		distance_5 = self.bellman_ford(graph, '5')
 
-		#for each list, we check a second probable impostor and create a couple with it and the first
+		# For each list, we check a second probable impostor and create a couple with it and the first
 		for player in distance_1:
-			#if the player is not another first probable impostor
+			# If the player is not another first probable impostor
 			if(player != "5" and player != "4"):
-				#if the cost is upper than two so it's not the dead or a player seen by the player (the first pobable impostor)
-				if(distance_1[player]>1):
-					#we add the couple to the list
-					probable_impostors.append(["1",player])
+				# If the cost is higher than two, not the dead or a seen player (the first pobable impostor)
+				if(distance_1[player] > 1):
+					# We add the couple to the list
+					probable_impostors.append(["1", player])
 
 		for player in distance_4:
 			if(player != "1" and player != "5"):
-				if(distance_4[player]>1):
-					probable_impostors.append(["4",player])
+				if(distance_4[player] > 1):
+					probable_impostors.append(["4", player])
 
 		for player in distance_5:
 			if(player != "1" and player != "4"):
-				if(distance_5[player]>1):
-					probable_impostors.append(["5",player])
+				if(distance_5[player] > 1):
+					probable_impostors.append(["5", player])
         
 		return probable_impostors
 
@@ -107,6 +109,11 @@ class Game:
 
 	def bellman_ford(self, graph, source):
 		"""
+		Bellman Ford algorithm
+		:param self: the map itself
+		:param graph: the graph
+		:param source:
+		:return:
 		"""
 		# Step 1: Prepare the distance and predecessor for each node
 		distance, predecessor = dict(), dict()
@@ -126,6 +133,10 @@ class Game:
 
 
 
-    def RndScores(self):
-    	for player in self.player_list:
-	        player.score += random.randrange(0, 12, 1)
+	def RndScores(self):
+		"""
+		Generates random scores
+		:param self: the map itself
+		"""
+		for player in self.player_list:
+			player.score += random.randrange(0, 12, 1)

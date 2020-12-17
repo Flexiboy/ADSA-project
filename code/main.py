@@ -15,6 +15,7 @@ def program(choice):
 		#step 1
 		print('\nStep 1')
 		step1 = Tournament(100)
+
 	elif choice == 2:
 		#step 2
 		print('\nStep 2')
@@ -25,6 +26,7 @@ def program(choice):
 			del new_player
 		step2 = Game(player_list)
 		print(step2.Couple_probable_impostors_Bellman())
+
 	elif choice == 3:
 		#step 3
 		print('\nStep 3')
@@ -37,16 +39,21 @@ def program(choice):
 		print('\n\nMap Impostors')
 		for elt in graph2:
 			print(elt)
+
 	elif choice == 4:
 		#step 4
 		print('\nStep 4\n')
 		step4 = Map()
 		step4.print_hampaths()
+
 	else:
 		#exit
 		print('\nExit')
 		return False
+
 	return True
+
+
 
 def main():
 	"""
@@ -62,6 +69,8 @@ def main():
 		print('4. Step 4')
 		print('5. Exit')
 		ctn = program(int(input('> ')))
+
+
 
 if __name__ == '__main__':
 	main()
