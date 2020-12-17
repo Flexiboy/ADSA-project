@@ -13,7 +13,8 @@ def program(choice):
 	"""
 	if choice == 1:
 		#step 1
-		step1 = Tournament(20)
+		print('\nStep 1')
+		step1 = Tournament(100)
 	elif choice == 2:
 		#step 2
 		print('step 2')

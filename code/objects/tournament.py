@@ -16,33 +16,21 @@ class Tournament:
 		for player in self.player_list:
 			self.alive.append(player)
 
-		for i in range(3):
+		while(len(self.alive) > 10):
+			for i in range(3):
+				self.game_list = self.newRound()
+				self.tournament.append(self.game_list)
+				self.game_list = []
+			self.updateRank()
+			self.ejectPlayers()
+
+		for i in range(5):
 			self.game_list = self.newRound()
 			self.tournament.append(self.game_list)
 			self.game_list = []
-		for player in self.alive:
-			print(player)
-		#self.updateRank()
-		print('\n')
-		sorted(self.alive, key=lambda player: player.score, reverse = True)
-		for player in self.alive:
-			print(player)
-
-#		while(len(self.alive) > 10):
-#			for i in range(3):
-#				self.game_list = self.newRound()
-#				self.tournament.append(self.game_list)
-#				self.game_list = []
-#			self.updateRank()
-#			self.ejectPlayers()
-#
-#		for i in range(5):
-#			self.game_list = self.newRound()
-#			self.tournament.append(self.game_list)
-#			self.game_list = []
-#	
-#		self.updateRank()
-#		self.showTop10()
+	
+		self.updateRank()
+		self.showTop10()
 
 	def setup(self, numberOfPlayers):
 		"""
@@ -87,7 +75,7 @@ class Tournament:
 		Updates the rank of the players
 		"""
 		rank = 0
-		sorted(self.alive, key=lambda player: player.score, reverse = True)
+		self.alive = sorted(self.alive, key=lambda player: player.score, reverse = True)
 		for player in self.alive:
 			rank += 1
 			player.rank = rank
@@ -96,7 +84,7 @@ class Tournament:
 		"""
 		Ejects the players that are too low ranked
 		"""
-		sorted(self.alive, key=lambda player: player.rank, reverse = True)
+		self.alive = sorted(self.alive, key=lambda player: player.rank, reverse = True)
 		for i in range(10):
 			self.eliminated.append(self.alive[0])
 			self.alive.pop(0)
@@ -114,5 +102,9 @@ class Tournament:
 		Shows the TOP 10 players
 		"""
 		self.updateRank()
+		print('')
 		for i  in range(10):
+			if i == 3:
+				print('')
 			print(f'{i + 1}. {self.alive[i]}')
+		print('')
