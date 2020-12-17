@@ -4,19 +4,23 @@
 # IOS 2 Promo 2022
 
 """
+
 Class game
+
 """
+
 import random
+
+from objects.player import *
 
 class Game:
 
-    def __init__(self, _id, list_player):
+    def __init__(self, list_player):
         """
         Game init
         :param _id: game id
         :param list_player: player list in the game
         """
-        self._id = _id
         self.list_player_impostor = []
         self.list_player_crewmate = []
         self.list_player = list_player

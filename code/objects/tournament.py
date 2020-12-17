@@ -13,24 +13,24 @@ class Tournament:
 		self.alive = []
 		self.eliminated = []
 
-		for player in player_list:
+		for player in self.player_list:
 			self.alive.append(player)
 
-		while(len(alive) > 10):
+		while(len(self.alive) > 10):
 			for i in range(3):
-				game_list = newRound()
-				tournament.append(game_list)
-				game_list = []
-			updateRank()
-			ejectPlayers()
+				self.game_list = self.newRound()
+				self.tournament.append(game_list)
+				self.game_list = []
+			self.updateRank()
+			self.ejectPlayers()
 	
 		for i in range(5):
-			game_list = newRound(alive)
-			tounrament.append(game_list)
-			game_list = []
+			self.game_list = self.newRound(self.alive)
+			self.tournament.append(self.game_list)
+			self.game_list = []
 	
-		updateRank()
-		showTop10()
+		self.updateRank()
+		self.showTop10()
 
 	def setup(self, numberOfPlayers):
 		"""
@@ -40,7 +40,8 @@ class Tournament:
 		player_list = []
 		player_name = ""
 		for i in range(numberOfPlayers):
-			player_name = input("Enter player name > ")
+			#player_name = input("Enter player name > ")
+			player_name = f'player{i}'
 			new_player = Player(i, player_name)
 			player_list.append(new_player)
 			del new_player
@@ -56,13 +57,13 @@ class Tournament:
 		player_list = []
 		player_number = 0
 
-		updateRank()
+		self.updateRank()
 
-		for i in range(len(self.alive) / 10):
+		for i in range(0, len(self.alive), 10):
 			for j in range(10): #Selecting the players of the game
 				player_list.append(self.alive[i * 10 + j])
 			new_game = Game(self.player_list)
-			game.Start()
+			new_game.Start()
 			game_list.append(new_game)
 			del new_game
 			player_list = []
@@ -85,8 +86,8 @@ class Tournament:
 		"""
 		sorted(self.alive, key=lambda player: player['rank'], reverse = True)
 		for i in range(10):
-		self.eliminated.append(alive[0])
-		self.alive.pop(0)
+			self.eliminated.append(alive[0])
+			self.alive.pop(0)
 
 	def showLeaderboard():
 		"""
@@ -100,14 +101,6 @@ class Tournament:
 		"""
 		Shows the TOP 10 players
 		"""
-		updateRank()
+		self.updateRank()
 		for i  in range(10):
 			print(f'{i}. {self.alive[i]}')
-
-def main():
-	"""
-	The main
-	"""
-
-if __name__ == '__main__':
-	main()
