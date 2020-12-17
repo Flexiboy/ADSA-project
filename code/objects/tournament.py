@@ -117,17 +117,6 @@ class Tournament:
 
 
 
-	def showLeaderboard(self):
-		"""
-		Shows the Leaderboard
-		:param self: the tournament itself
-		"""
-		sorted(self.player_list, key=lambda player: player.rank, reverse = False)
-		for player in self.player_list:
-			print(player)
-
-
-
 	def showTop10(self):
 		"""
 		Shows the TOP 10 players
