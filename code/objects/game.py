@@ -34,16 +34,12 @@ class Game:
 		impostor_count = 2
 
 		# Loop that places random player in list of crew or impostor and set their role
-		for player in self.alive:
-			rnd_score = random.choice(range(0,13,1))
 		if impostor_count > 0:
 			impostor_count -= 1
-			player.role = "impostor"
-			player.Score_games.append(rnd_score)
+			player.role = 'impostor'
 			self.impostors.append(player)
 		else:
-			player.role = "crewmate"
-			player.Score_games.append(rnd_score)
+			player.role = 'crewmate'
 			self.crewmates.append(player)
 
 
@@ -54,10 +50,8 @@ class Game:
 		:param self: the game itself
 		:return: increased verbosity of object game
 		"""
-		return "The game have :\n 2 impostors : " 
-			+ self.Str_list_name(self.impostors)
-			+ "\n8 crewmates : "
-			+ self.Str_list_name(self.crewmates)
+		return ('The game have:\n2 impostors: ' +  self.Str_list_name(self.impostors) 
+			+ '\n8 crewmates: ' + self.Str_list_name(self.crewmates))
 
 
 
