@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # Authors: Julien MARTIN-PRIN & Valentin FERNANDES
 
-#from objects.tournament import *
+from objects.tournament import *
 #from objects.map import *
 
 def program(choice):
@@ -13,7 +13,7 @@ def program(choice):
 	"""
 	if choice == 1:
 		#step 1
-		print('step 1')
+		step1 = Tournament(100)
 	elif choice == 2:
 		#step 2
 		print('step 2')
