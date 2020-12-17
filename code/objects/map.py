@@ -231,9 +231,3 @@ class Map:
 				print("Path : ")
 				print(hamiltonian)
 				print("\n")
-
-
-m = Map()
-graph = m.Floyd_Warshall(m.map_crewmate)
-for elt in graph:
-	print(elt)
