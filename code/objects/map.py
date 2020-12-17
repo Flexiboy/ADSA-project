@@ -120,14 +120,14 @@ class Map:
 		distance[source] = 0
 
 		# Step 2: Relax the edges
-		for _ in range(len(graph) - 1):
+		for i in range(len(graph) - 1):
 			for node in graph:
 				for neighbour in graph[node]:
 				# If the distance between the node and the neighbour is lower than the current, store it
 					if distance[neighbour] > distance[node] + graph[node][neighbour]:
 							distance[neighbour], predecessor[neighbour] = distance[node] + graph[node][neighbour], node
-
-		return distance   
+		
+		return distance  
 
 	def Floyd_Warshall(self, graph):
 		"""
@@ -137,7 +137,7 @@ class Map:
 		"""
 		final = list()
 		for current_node in graph:       
-			final.append(f"'{current_node}': {self.bellman_ford(graph, current_node)[0]}")
+			final.append(f"'{current_node}': {self.bellman_ford(graph, current_node)}")
 		return final
 	
 	def hampath(self, graph, start,bound, path=None):
@@ -232,7 +232,8 @@ class Map:
 				print(hamiltonian)
 				print("\n")
 
-#m = Map()
-#graph = m.Floyd_Warshall(m.map_crewmate)
-#for elt in graph:
-#	print(elt)
+
+m = Map()
+graph = m.Floyd_Warshall(m.map_crewmate)
+for elt in graph:
+	print(elt)
