@@ -493,4 +493,4 @@ class Game:
 
     def RndScores(self):
     	for player in self.list_player:
-	        player.score = random.randrange(0, 12, 1)
+	        player.score += random.randrange(0, 12, 1)

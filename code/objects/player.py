@@ -43,16 +43,18 @@ class Player:
 		if(index == "id"):
 			return self._id
 		if(index == "score"):
-			return self.Score_games
-		if(index == 'location'):
-			return self.location
+			return self.score
+		if(index == 'rank'):
+			return self.rank
 		return None
 		
 	def __setitem__(self, index, value):
 		if(index == "role"):
 			self.role = value
-		if(index == 'location'):
-			self.location = value
+		if(index == 'rank'):
+			self.rank = value
+		if(index == 'score'):
+			self.score = value
 
 	"""
 	called during a game

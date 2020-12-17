@@ -13,7 +13,7 @@ def program(choice):
 	"""
 	if choice == 1:
 		#step 1
-		step1 = Tournament(100)
+		step1 = Tournament(20)
 	elif choice == 2:
 		#step 2
 		print('step 2')
@@ -36,11 +36,12 @@ def main():
 	ctn = True
 
 	while ctn:
-		print('----- Program choice -----')
+		print('\n----- Program choice -----')
 		print('1. Step 1')
 		print('2. Step 2')
 		print('3. Step 3')
 		print('4. Step 4')
+		print('5. Exit')
 		ctn = program(int(input('> ')))
 
 if __name__ == '__main__':
