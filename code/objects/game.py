@@ -18,7 +18,6 @@ class Game:
     def __init__(self, list_player):
         """
         Game init
-        :param _id: game id
         :param list_player: player list in the game
         """
         self.list_player_impostor = []
@@ -82,8 +81,8 @@ class Game:
             for crewmate in self.list_player_crewmate:
                 crewmate.ScoreAdd("task_done")
                 crewmate.ScoreAdd("win")
-            print ("All tasks done !")
-            print ("Crewmates win !")
+#           print ("All tasks done !")
+#           print ("Crewmates win !")
             return 0
 
         # random death
@@ -113,8 +112,8 @@ class Game:
                 #add score
                 self.list_player_impostor[0].ScoreAdd("win")
                 self.list_player_impostor[1].ScoreAdd("win")
-                print("Unlike bonnie and clyde, nobody caught the impostors. They killed everyone!")
-                print ("Impostors win !")
+#               print("Unlike bonnie and clyde, nobody caught the impostors. They killed everyone!")
+#               print ("Impostors win !")
                 return 0
 
             # If still two players with one impostors among them, the game is win by impostors
@@ -123,8 +122,8 @@ class Game:
                     #add score
                     self.list_player_impostor[0].ScoreAdd("win")
                     self.list_player_impostor[1].ScoreAdd("win")
-                    print("The last impostor killed everyone. Like Christophe Lambert he is the highlander !!! Glory to the one")
-                    print ("Impostors win !")
+#                   print("The last impostor killed everyone. Like Christophe Lambert he is the highlander !!! Glory to the one")
+#                   print ("Impostors win !")
                     return 0
 
             # If a crewmate has been killed :
@@ -134,25 +133,26 @@ class Game:
             if rnd_discover_kill == True: 
 
                 #call the vote function
-                print(self.list_player_crewmate[rnd_crewmate].name, " is dead, you must vote :")
+#               print(self.list_player_crewmate[rnd_crewmate].name, " is dead, you must vote :")
                 list_probable_impostors = self.Probable_impostors(self.alive, dead_player)
-                print("This the list of probable impostors : ")
+#               print("This the list of probable impostors : ")
                 self.Str_list_name(list_probable_impostors)
                 vote = self.Vote(self.alive)
                
                 #if None, nothing happen
                 if(vote == None):
-                    print("No one has been ejected")
+#                   print("No one has been ejected")
+                    pass
                 else:
                     player_ejected = self.alive[vote]
-                    print("player ", player_ejected.name, " has been ejected")
+#                   print("player ", player_ejected.name, " has been ejected")
 
                     #pop the ejected player from alive list
                     self.alive.pop(vote)
 
                     #if the ejected player was impostor, add score
                     if( player_ejected.role == "impostor"):
-                        print(player_ejected.name, " was a impostor")
+#                       print(player_ejected.name, " was a impostor")
                         for crewmate in self.alive:
                             if(crewmate.role == "crewmate"):
                                 crewmate.ScoreAdd("unmask_impostor")
@@ -168,8 +168,8 @@ class Game:
                 #add score for each crewmates
                 for crewmate in self.list_player_crewmate:
                     crewmate.ScoreAdd("win")
-                print("All impostors ejected !")
-                print ("Crewmates win !")
+#               print("All impostors ejected !")
+#               print ("Crewmates win !")
                 return 0
                 
 
@@ -178,8 +178,8 @@ class Game:
                 #add score
                 self.list_player_impostor[0].ScoreAdd("win")
                 self.list_player_impostor[1].ScoreAdd("win")
-                print("Unlike bonnie and clyde, nobody caught the impostors. They killed everyone!")
-                print ("Impostors win !")
+#               print("Unlike bonnie and clyde, nobody caught the impostors. They killed everyone!")
+#               print ("Impostors win !")
                 return 0
 
             # If still two players with one impostors among them, the game is win by impostors
@@ -188,8 +188,8 @@ class Game:
                     #add score
                     self.list_player_impostor[0].ScoreAdd("win")
                     self.list_player_impostor[1].ScoreAdd("win")
-                    print("The last impostor killed everyone. Like Christophe Lambert he is the highlander !!! Glory to the one")
-                    print ("Impostors win !")
+#                   print("The last impostor killed everyone. Like Christophe Lambert he is the highlander !!! Glory to the one")
+#                   print ("Impostors win !")
                     return 0
 
         """
@@ -231,24 +231,24 @@ class Game:
         result = None
 
         #Print of player still alive
-        print("Players still alive : \n")
-        for player in alive : 
-            if(player.role == "impostor"):
-                print(player._id, ' ', player.name,' impostor ')
-            else:
-                print(player._id, ' ', player.name)
-        print("vote 10 for skip this vote\n")
+#       print("Players still alive : \n")
+#       for player in alive : 
+#           if(player.role == "impostor"):
+#               print(player._id, ' ', player.name,' impostor ')
+#           else:
+#               print(player._id, ' ', player.name)
+#       print("vote 10 for skip this vote\n")
       
         #request a vote for each player : the player id or 10 for skip
         for player in alive : 
 
             rnd_player = random.choice(alive)
-            print("Player ", player._id, " " , player.name, "vote for : ")
+#           print("Player ", player._id, " " , player.name, "vote for : ")
             
             #if we want random vote
             if(random_vote == True):
                 #add the vote to the list 
-                print(rnd_player._id)
+#               print(rnd_player._id)
                 list_votes.append(rnd_player._id)
             else:
                 list_votes.append(int(input()))
@@ -327,7 +327,7 @@ class Game:
                 else : 
                     rnd_player = random.choice(range(0,len(alive)-1,1))
 
-        print("who saw who? I can help you sherlock : \n", graph)
+#       print("who saw who? I can help you sherlock : \n", graph)
         return list_Probable_impostors
 
     #endregion

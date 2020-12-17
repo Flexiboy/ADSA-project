@@ -23,6 +23,7 @@ class Tournament:
 				self.game_list = []
 			self.updateRank()
 			self.ejectPlayers()
+			print('round1')
 	
 		for i in range(5):
 			self.game_list = self.newRound(self.alive)
