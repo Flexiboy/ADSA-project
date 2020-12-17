@@ -23,11 +23,11 @@ def program(choice):
 		print('\nStep 3')
 		step3 = Map()
 		graph1 = step3.Floyd_Warshall(step3.map_crewmate)
-		print('Map Crewmate')
+		print('\nMap Crewmate')
 		for elt in graph1:
 			print(elt)
-		graph2 = step3.Floyd_Warshall(step3.map_impostors)
-		print('Map Impostors')
+		graph2 = step3.Floyd_Warshall(step3.map_impostor)
+		print('\n\nMap Impostors')
 		for elt in graph2:
 			print(elt)
 	elif choice == 4:
