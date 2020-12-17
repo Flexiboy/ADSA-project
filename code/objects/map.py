@@ -5,61 +5,6 @@
 
 """
 
-Class Disjoint Set
-
-"""
-
-class DisjointSet:
-	
-	def __init__(self):
-		"""
-		Initialize the disjoint set
-		:param self: the disjoint set itself
-		"""
-		self.parent = {}
-
-
-
-	def makeSet(self, N):
-		"""
-		Perform makeset operation
-		:param self: the disjoint set itself
-		:param N: number of disjoint set
-		"""
-		for i in range(N + 1):
-			self.parent[i] = i
-
-
-
-	def Find(self, k):
-		"""
-		Find the root of the set in which element k belongs
-		:param self: the disjoint set itself
-		:param k: 
-		"""
-		if self.parent[k] == k:
-			return k
-		return self.Find(self.parent[k])
-
-
-
-	def Union(self, a, b):
-		"""
-		Performs the union of two subsets
-		:param self: the disjoint set itself
-		:param a: subset a
-		:param b: subset b
-		"""
-		x = self.Find(a)
-		y = self.Find(b)
-		self.parent[x] = y
-
-
-
-
-
-"""
-
 Class Map
 
 """
