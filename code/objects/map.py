@@ -199,3 +199,26 @@ class Map:
 				print("Path : ")
 				print(hamiltonian)
 				print('')
+
+
+
+	def time_travel(self,player):
+		"""
+		function to display all pair of room with the time travel
+		:param self: the map itself
+		:param player: a player
+		"""
+		# dictionnary
+		graph = {}
+
+		#is the player is impostor, select the map impostor
+		if(player.role == "impostor"):
+			graph = self.map_impostor
+		#else select the map crewmate
+		else : 
+			graph = self.map_crewmate
+		#display pair of rooms passing throught the disctionnary
+		for room, key in graph.items():
+			for elt, val in key.items():
+				print(f'[{room} -> {elt}] = {val}')
+			print('')

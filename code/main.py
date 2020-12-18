@@ -19,6 +19,7 @@ def program(choice):
 	elif choice == 2:
 		#step 2
 		print('\nStep 2')
+		print('\nCouple of probable impostors')
 		player_list = []
 		for i in range(10):
 			new_player = Player(i, f'player{i + 1}')
@@ -39,10 +40,15 @@ def program(choice):
 		print('\n\nMap Impostors')
 		for elt in graph2:
 			print(elt)
+		impostor = Player(1,"the impostor")
+		impostor.role = "impostor"
+		print('\nTime travel for each pair of rooms')
+		step3.time_travel(impostor)
 
 	elif choice == 4:
 		#step 4
 		print('\nStep 4\n')
+		print('\nAll paths passing throught each room')
 		step4 = Map()
 		step4.print_hampaths()
 

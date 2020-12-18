@@ -124,6 +124,7 @@ class Tournament:
 		"""
 		self.updateRank()
 		print('')
+		print("the podium : ")
 		for i  in range(10):
 			if i == 3:
 				print('')
