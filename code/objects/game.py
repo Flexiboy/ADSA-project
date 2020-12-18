@@ -132,10 +132,11 @@ class Game:
 
 
 
-	def RndScores(self):
+	def RndScores(self, nGames):
 		"""
 		Generates random scores
 		:param self: the map itself
+		:param nGames: number of games played
 		"""
 		for player in self.player_list:
-			player.score += random.randrange(0, 12, 1)
+			player.score = ((nGames - 1) / nGames * player.score) + (1 / nGames * random.randrange(0, 12, 1))
