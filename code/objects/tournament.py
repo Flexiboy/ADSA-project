@@ -20,6 +20,7 @@ class Tournament:
 		self.game_list = []
 		self.alive = []
 		self.eliminated = []
+		self.nGames = 0
 
 		for player in self.player_list:
 			self.alive.append(player)
@@ -28,6 +29,7 @@ class Tournament:
 		# 10 players and we do it until there remains 10 players
 		while(len(self.alive) > 10):
 			for i in range(3):
+				self.nGames += 1
 				self.game_list = self.newRound()
 				self.tournament.append(self.game_list)
 				self.game_list = []
@@ -80,7 +82,7 @@ class Tournament:
 			for j in range(10): #Selecting the players of the game
 				player_list.append(self.alive[i + j])
 			new_game = Game(self.player_list)
-			new_game.RndScores()
+			new_game.RndScores(self.nGames)
 			game_list.append(new_game)
 			del new_game
 			player_list = []
