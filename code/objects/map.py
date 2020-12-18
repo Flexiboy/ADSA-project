@@ -72,8 +72,8 @@ class Map:
 		Bellman Ford algorithm
 		:param self: the map itself
 		:param graph: the graph
-		:param source: 
-		:return: the distance
+		:param source: the node from which we look all path to other nodes
+		:return: dictionnary of all node from the source node with the distance from it 
 		"""
 		# Step 1: Prepare the distance and predecessor for each node
 		distance, predecessor = dict(), dict()
@@ -98,8 +98,10 @@ class Map:
 		Floyd Warshall Algorithm
 		:param self: the map itself
 		:param graph: the graph
+		:return: all path with cost for all node
 		"""
 		final = list()
+		#we execute bellman_ford for all nodes.
 		for current_node in graph:       
 			final.append(f"'{current_node}': {self.bellman_ford(graph, current_node)}")
 		return final
@@ -111,9 +113,9 @@ class Map:
 		recusive Hamiltonian path function
 		:param self: the map itself
 		:param graph: the graph
-		:param start: 
-		:param bound:
-		:param path:
+		:param start: the first room
+		:param bound: the number of rooms
+		:param path: the path from the first room to the last
 		:return: int path list 
 		"""
 		
@@ -142,10 +144,14 @@ class Map:
 		"""
 		Function to convert all int to string, it's more fancy and understanble
 		:param self: the map itself
-		:param list_: the list
-		:return: string list
+		:param list_: the int list of the path
+		:return: none
 		"""
+
+		#for each room, we convert the number corresponding to the dedicated room's name
 		for elem in list_:
+
+			#exemple : 0 is the cafeteria
 			if(elem == 0):
 				list_[list_.index(elem)] = "cafeteria"
 			if(elem == 1):
