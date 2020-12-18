@@ -105,14 +105,18 @@ class Game:
 		"""
 		Bellman Ford algorithm
 		:param self: the map itself
-		:param graph: the graph
-		:param source:
-		:return:
+		:param graph: the graph with nodes and vertices
+		:param source: the node from which we look all path to other nodes
+		:return: dictionnary of all node from the source node with the distance from it 
 		"""
 		# Step 1: Prepare the distance and predecessor for each node
 		distance, predecessor = dict(), dict()
+
+		#for each node
 		for node in graph:
+			#set the distance to infinite
 			distance[node], predecessor[node] = float('inf'), None
+		#the distance for the node that we look is 0. it's the start point
 		distance[source] = 0
 
 		# Step 2: Relax the edges
@@ -123,6 +127,7 @@ class Game:
 					if distance[neighbour] > distance[node] + graph[node][neighbour]:
 						distance[neighbour], predecessor[neighbour] = distance[node] + graph[node][neighbour], node
 
+		#retrun a dictionnary with all distance
 		return distance
 
 
