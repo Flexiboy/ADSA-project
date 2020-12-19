@@ -27,7 +27,7 @@ def main():
 	print("Do you want play the game with vote ? (y/n)")
 	print("if no, the vote will be generated randomly. Else you have to vote and unmask the terrible impostors")
 	decision = input('> ')	
-	if decision=='y':		
+	if decision=='n':		
 		AmongUs.Start()
 	else : 
 		AmongUs.Start(RndVote =False)
