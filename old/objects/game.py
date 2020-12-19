@@ -56,7 +56,7 @@ class Game:
     
 
     #region PLAY THE GAME
-    def Start(self, task_done = 0, RndVote = True):
+    def Start(self, RndVote, task_done = 0):
         """
         Starting game function
         :param self: the game itself
@@ -91,8 +91,8 @@ class Game:
 
             #infinite loop
             while True:
-                rnd_crewmate = random.choice(range(0, len(self.list_player_crewmate)-1, 1))
-                rnd_killer = random.choice(range(0,len(self.list_player_impostor)-1,1))
+                rnd_crewmate = random.choice(range(0, len(self.list_player_crewmate), 1))
+                rnd_killer = random.choice(range(0,len(self.list_player_impostor),1))
                 
                 # if the random crewmate and impostor is still alive : 
                 # pop the crewmate from the alive list 
@@ -198,7 +198,7 @@ class Game:
             while (counter < rnd_nbplayer_taskdone):
 
                 #Pick a random crewmate
-                rnd_crewmate = random.choice(range(0, len(self.list_player_crewmate)-1, 1))
+                rnd_crewmate = random.choice(range(0, len(self.list_player_crewmate), 1))
 
                 #if crewmate is still alive
                 if (self.list_player_crewmate[rnd_crewmate] in self.alive):
@@ -210,7 +210,7 @@ class Game:
             break
 
         #End of the turn, retry with the players still alive
-        return self.Start(task_done)
+        return self.Start(RndVote,task_done)
 
     def Vote(self, alive,random_vote):
         """
