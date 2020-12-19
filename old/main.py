@@ -11,6 +11,7 @@ def main():
 	"""
 	Let's play the game ! 
 	"""
+	print("Let's play to the game!")
 	player0=Player(0,"Zerator")
 	player1=Player(1,"Ponce")
 	player2=Player(2,"Antoine Daniel")
