@@ -56,7 +56,7 @@ class Game:
     
 
     #region PLAY THE GAME
-    def Start(self, task_done = 0):
+    def Start(self, task_done = 0, RndVote = True):
         """
         Starting game function
         :param self: the game itself
@@ -91,8 +91,8 @@ class Game:
 
             #infinite loop
             while True:
-                rnd_crewmate = random.choice(range(0, 8, 1))
-                rnd_killer = random.choice(range(0,2,1))
+                rnd_crewmate = random.choice(range(0, len(self.list_player_crewmate)-1, 1))
+                rnd_killer = random.choice(range(0,len(self.list_player_impostor)-1,1))
                 
                 # if the random crewmate and impostor is still alive : 
                 # pop the crewmate from the alive list 
@@ -134,7 +134,7 @@ class Game:
                 list_probable_impostors = self.Probable_impostors(self.alive, dead_player)
                 print("This the list of probable impostors : ")
                 self.Str_list_name(list_probable_impostors)
-                vote = self.Vote(self.alive)
+                vote = self.Vote(self.alive,RndVote)
                
                 #if None, nothing happen
                 if(vote == None):
@@ -198,7 +198,7 @@ class Game:
             while (counter < rnd_nbplayer_taskdone):
 
                 #Pick a random crewmate
-                rnd_crewmate = random.choice(range(0, 8, 1))
+                rnd_crewmate = random.choice(range(0, len(self.list_player_crewmate)-1, 1))
 
                 #if crewmate is still alive
                 if (self.list_player_crewmate[rnd_crewmate] in self.alive):
@@ -212,7 +212,7 @@ class Game:
         #End of the turn, retry with the players still alive
         return self.Start(task_done)
 
-    def Vote(self, alive,random_vote=True):
+    def Vote(self, alive,random_vote):
         """
         Voting method
         Take a list of alive player in the game
@@ -277,7 +277,7 @@ class Game:
         #else return None
         return result
 
-    def Probable_impostors(self,alive,deads,):
+    def Probable_impostors(self,alive,deads):
         """
         Method to get a graph with all alive player and see the meeting between them.
         We take two lists, alive and dead players.
@@ -328,106 +328,6 @@ class Game:
 
     #endregion
 
-    def Couple_probable_impostors(self):
-        """
-        Method to find probable impostors in a graph
-        return:list of impostor's couple
-        """
-
-        #the graph
-        graph = {'0': {'1': 0, '4': 0, '5': 0},
-                    '1': {'0': 110 , '2': 100, '6': 100},
-                    '2': {'1': 100, '3': 100, '7': 100},
-                    '3': {'2': 100, '4': 100, '8': 100},
-                    '4': {'0': 0, '3': 100, '9': 100},
-                    '5': {'0': 0, '7': 100, '8': 100},
-                    '6': {'1': 100, '8': 100, '9': 100},
-                    '7': {'2': 100, '5': 100, '9': 100},
-                    '8': {'3': 100, '5': 100, '6': 100},
-                    '9': {'4': 100, '6': 100, '7': 100}}   
-                    
-        list_probable_impostors = []
-
-        #for each player in the graph, we will remove all player not probable impostor from a player list
-        for player in graph:
-
-            #a temp list of impostor
-            temp_list_player = ['0','1','2','3','4','5','6','7','8','9']
-
-            #we know that player 1, 4 and 5 are probable impostors. So will check for each a probable partner 
-            if (player == '1'or player == '4' or player == '5'):
-
-                #remove the other probable impostor
-                if (player == '1'):
-                    temp_list_player.remove('4')
-                    temp_list_player.remove('5')
-                if(player == '4'):
-                    temp_list_player.remove('1')
-                    temp_list_player.remove('5')
-                if(player == '5'):
-                    temp_list_player.remove('4')
-                    temp_list_player.remove('1')
-
-                #We also remove the probable impostor     
-                temp_list_player.remove(player)
-
-                #We remove player seen by the probable impostor
-                for player_seen in graph[player]:
-                    temp_list_player.remove(player_seen)
-
-                #We create couple with the first probable impostor (1 or 4 or 5) and each player left in the player list    
-                for i in temp_list_player:
-                    list_probable_impostors.append([player,i])
-        
-        return list_probable_impostors
-
-    def Couple_probable_impostors_Bellman(self):
-        """
-        Method to find probable impostors in a graph with bellman_ford
-        return:list of impostor's couple
-        """
-
-        #the graph
-        graph = {'0': {'1': 1, '4': 1, '5': 1},
-                    '1': {'0': 1 , '2': 1, '6': 1},
-                    '2': {'1': 1, '3': 1, '7': 1},
-                    '3': {'2': 1, '4': 1, '8': 1},
-                    '4': {'0': 1, '3': 1, '9': 1},
-                    '5': {'0': 1, '7': 1, '8': 1},
-                    '6': {'1': 1, '8': 1, '9': 1},
-                    '7': {'2': 1, '5': 1, '9': 1},
-                    '8': {'3': 1, '5': 1, '6': 1},
-                    '9': {'4': 1, '6': 1, '7': 1}}   
-                    
-        list_probable_impostors = []
-
-        # Store all distance from the three first probable impostor
-        distance_1 = self.bellman_ford(graph,'1')   
-        distance_4 = self.bellman_ford(graph,'4')  
-        distance_5 = self.bellman_ford(graph,'5')
-
-        #for each list, we check a second probable impostor and create a couple with it and the first
-        for player in distance_1:
-            
-            #if the player is not another first probable impostor
-            if(player != "5" and player != "4"):
-
-                #if the cost is upper than two so it's not the dead or a player seen by the player (the first pobable impostor)
-                if(distance_1[player]>1):
-
-                    #we add the couple to the list
-                    list_probable_impostors.append(["1",player])
-        for player in distance_4:
-            if(player != "1" and player != "5"):
-                if(distance_4[player]>1):
-                    list_probable_impostors.append(["4",player])
-        for player in distance_5:
-            if(player != "1" and player != "4"):
-                if(distance_5[player]>1):
-                    list_probable_impostors.append(["5",player])
-        
-        return list_probable_impostors
-
     def Color_player(self,graph):
         """
         Color a graph of player who have seen each other
@@ -469,20 +369,3 @@ class Game:
         """
         for player in liste:
             player.Score_game()        
-
-    def bellman_ford(self, graph, source):
-        # Step 1: Prepare the distance and predecessor for each node
-        distance, predecessor = dict(), dict()
-        for node in graph:
-            distance[node], predecessor[node] = float('inf'), None
-        distance[source] = 0
-
-        # Step 2: Relax the edges
-        for _ in range(len(graph) - 1):
-            for node in graph:
-                    for neighbour in graph[node]:
-                    # If the distance between the node and the neighbour is lower than the current, store it
-                        if distance[neighbour] > distance[node] + graph[node][neighbour]:
-                                distance[neighbour], predecessor[neighbour] = distance[node] + graph[node][neighbour], node
-
-        return distance   
