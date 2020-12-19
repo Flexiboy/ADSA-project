@@ -5,51 +5,6 @@
 
 """
 
-Class Disjoint Set
-
-"""
-
-class DisjointSet:
-	
-	def __init__(self):
-		"""
-		Initialize the disjoint set
-		:param self: the disjoint set itself
-		"""
-		self.parent = {}
-	
-	def makeSet(self, N):
-		"""
-		Perform makeset operation
-		:param self: the disjoint set itself
-		:param N: number of disjoint set
-		"""
-		for i in range(N + 1):
-			self.parent[i] = i
-
-	def Find(self, k):
-		"""
-		Find the root of the set in which element k belongs
-		:param self: the disjoint set itself
-		:param k: 
-		"""
-		if self.parent[k] == k:
-			return k
-		return self.Find(self.parent[k])
-
-	def Union(self, a, b):
-		"""
-		Performs the union of two subsets
-		:param self: the disjoint set itself
-		:param a: subset a
-		:param b: subset b
-		"""
-		x = self.Find(a)
-		y = self.Find(b)
-		self.parent[x] = y
-
-"""
-
 Class Map
 
 """
@@ -62,21 +17,6 @@ class Map:
 		:param self: the map itself
 		"""
 		
-		self.map = [
-			('cafeteria', 'weapons'), ('cafeteria', 'upper e'), ('cafeteria', 'medbay'), ('cafeteria', 'admin'),
-			('cafeteria', 'storage'), ('weapons', 'cafeteria'), ('weapons', 'o2'), ('weapons', 'navigations'),
-			('weapons', 'shield'), ('navigations', 'o2'), ('navigations', 'weapons'), ('navigations', 'shield'),
-			('o2', 'weapons'), ('o2', 'navigations'), ('o2', 'shield'), ('shield', 'weapons'), ('shield', 'o2'),
-			('shield', 'navigations'), ('shield', 'communication'), ('shield', 'storage'), ('communication', 'shield'),
-			('communication', 'storage'), ('storage', 'communication'), ('storage', 'shield'), ('storage', 'admin'),
-			('storage', 'cafeteria'), ('storage', 'electrical'), ('storage', 'lower e'), ('electrical', 'storage'),
-			('electrical', 'lower e'), ('lower e', 'storage'), ('lower e', 'electrical'), ('lower e', 'security'),
-			('lower e', 'reactor'), ('lower e', 'upper e'), ('reactor', 'security'), ('reactor', 'upper e'),
-			('reactor', 'lower e'), ('upper e', 'reactor'), ('upper e', 'security'), ('upper e', 'lower e'),
-			('upper e', 'medbay'), ('upper e', 'cafeteria'), ('security', 'reactor'), ('security', 'upper e'),
-			('security', 'lower e'), ('medbay', 'cafeteria'), ('medbay', 'upper e'), ('admin', 'cafeteria'),
-			('admin', 'storage')]
-
 		self.map_crewmate = {
 			'cafeteria': {'weapons': 1, 'upper e': 7, 'medbay': 2, 'admin': 2, 'storage': 2},
 			'weapons': {'cafeteria': 1, 'o2': 2, 'navigations': 5, 'shield': 7},
@@ -231,8 +171,3 @@ class Map:
 				print("Path : ")
 				print(hamiltonian)
 				print("\n")
-
-#m = Map()
-#graph = m.Floyd_Warshall(m.map_crewmate)
-#for elt in graph:
-#	print(elt)

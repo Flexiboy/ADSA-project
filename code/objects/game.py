@@ -50,8 +50,8 @@ class Game:
 		:param self: the game itself
 		:return: increased verbosity of object game
 		"""
-		return ('The game have:\n2 impostors: ' +  self.Str_list_name(self.impostors) 
-			+ '\n8 crewmates: ' + self.Str_list_name(self.crewmates))
+		return ('The game have:\n2 impostors: ' +  self.impostors
+			+ '\n8 crewmates: ' + self.crewmates)
 
 
 
