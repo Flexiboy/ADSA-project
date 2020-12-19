@@ -28,7 +28,7 @@ def main():
 	print("if no, the vote will be generated randomly. Else you have to vote and unmask the terrible impostors")
 	decision = input('> ')	
 	if decision=='n':		
-		AmongUs.Start()
+		AmongUs.Start(RndVote =True)
 	else : 
 		AmongUs.Start(RndVote =False)
 
